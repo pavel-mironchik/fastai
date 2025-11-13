@@ -1,0 +1,43 @@
+description = "Creates a new feature brief by asking a series of questions, populating a template, and proactively identifying missing information."
+prompt = """
+You are an expert software engineer. Your task is to create a detailed feature brief based on user input.
+
+First, ask the user the following questions all at once. Present them clearly, numbered, and instruct the user to provide their answers in a structured way (e.g., by numbering their responses):
+
+"1. Что мы имеем на данный момент? Как сейчас работает та часть проекта, которую нужно изменить или в которую нужно добавить новый функционал?
+2. Что нужно сделать (изменить, добавить)? Как должен выглядеть конечный результат?
+3. Какую пользу принесет новый/измененный функционал по сравнению с текущим?
+4. Есть ли примеры кода и/или существующие в проекте паттерны, которые можно использовать/повторить?
+5. Какие важные файлы могут пригодиться при решени задачи?
+6. Что еще может быть полезно при решении задачи? Что учесть и на что обратить внимание?"
+
+After receiving the user's answers, perform the following steps:
+
+1.  **Derive Human-Readable Short Description:**
+    *   From the user's answers, **automatically determine a concise, human-readable "short_description"** of the task (e.g., "Add user authentication", "Refactor payment module"). This will be used for the brief's main title.
+
+2.  **Create the feature directory:**
+    *   List the contents of the `.fastai/features/` directory.
+    *   Identify the highest existing feature number (e.g., from `001_feature_name`).
+    *   Increment this number by one to get the `next_feature_number` (e.g., `002`). If no features exist, start with `001`.
+    *   **Convert the human-readable `short_description` to a slug** (lowercase, replace spaces with underscores, remove special characters) to use as `short_task_name` for the directory.
+    *   Create a new directory: `.fastai/features/{next_feature_number}_{short_task_name}`.
+
+3.  **Copy and Prepare the brief template:**
+    *   **Read the content of the template file `.fastai/templates/brief.md`.**
+    *   Copy this content to a new file in the newly created feature directory (e.g., `.fastai/features/{next_feature_number}_{short_task_name}/brief.md`).
+
+4.  **Fill the brief template intelligently:**
+    *   **Analyze the structure of the copied `brief.md` file.** Identify its sections and their headings.
+    *   **Intelligently fill the sections** of the copied `brief.md` file. Map the user's answers to the initial questions to the most appropriate sections based on the section headings.
+    *   The main title/short description section should be filled with the **human-readable `short_description`** derived in step 1.
+    *   **Adapt to potential template changes:** If the template structure or placeholder names change, use your understanding of the content to place information logically. If a specific placeholder is missing, place the relevant information in the most sensible alternative location or create a new, clearly labeled section.
+
+5.  **Proactively Identify and Ask for Missing Information:**
+    *   **Analyze the *partially filled* brief.** Based on the content, identify any specific details, constraints, technical requirements, edge cases, or other information that is *missing* but would be crucial for a comprehensive implementation plan.
+    *   Formulate **specific, targeted follow-up questions** to the user to gather these missing details. Do not ask a generic "what else?".
+    *   **Intelligently integrate the user's responses to these follow-up questions into the brief.** Place the information where it is most relevant within the brief's existing sections, or create new, clearly labeled sections if no suitable existing section is found.
+    *   Throughout this process, pay close attention to any specific values (identifiers, codes, amounts, URLs, etc.) provided by the user. Ensure these are accurately captured and included in the brief.
+
+The final output should be the path to the created brief file and a confirmation that it has been populated.
+"""
