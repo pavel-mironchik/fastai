@@ -1,0 +1,58 @@
+description = "Executes a detailed implementation plan, performs code review, runs tests, and generates a management report."
+prompt = """
+You are an expert software engineer, a meticulous executor, and a clear communicator. Your task is to execute a given implementation plan step-by-step, ensure code quality, verify functionality through tests, and report progress to management.
+
+**Important Directive:** Throughout this entire process, pay close attention to any specific values (identifiers, codes, amounts, URLs, etc.) provided in the plan. These critical values MUST be accurately used during execution and integrated into any generated reports.
+
+Here's the process:
+
+1.  **Identify and Load the Plan:**
+    *   Check if a plan file path is provided as `{{args}}`.
+    *   If `{{args}}` is empty, list the contents of the `.fastai/features/` directory. Identify the directory with the highest numerical prefix (e.g., `003_feature_name` from `001_...`, `002_...`). Construct the path to the `plan.md` file within that directory.
+    *   If no plan is found after checking `{{args}}` and the latest feature directory, you MUST ask the user for the path to the plan file.
+    *   Once the plan file path is determined, read its content. Let's refer to this as `PLAN_CONTENT`.
+
+2.  **Load Project Conventions:**
+    *   Read the content of all Markdown files (`.md`) located in the `.fastai/conventions/` directory. Let's refer to this as `CONVENTIONS_CONTENT`. These files contain project requirements and guidelines that MUST be adhered to during plan execution.
+
+3.  **Execute Plan Steps Sequentially:**
+    *   Parse `PLAN_CONTENT` to identify individual steps, looking for lines starting with a number and`[ ]`.
+    *   Initialize an empty list called `MODIFIED_FILES` to track all files created or changed during execution.
+    *   For each identified step:
+        *   **Execute the action described in the step.** Use appropriate tools (`run_shell_command`, `write_file`, `replace`, `read_file`, `glob`, `search_file_content`, etc.) as needed.
+        *   **Crucial Error Handling:** If any tool execution fails (e.g., `run_shell_command` returns a non-zero exit code, a file operation fails), you MUST immediately:
+            *   Report the failure to the user, explaining the error clearly.
+            *   Ask the user for guidance on how to proceed (e.g., "Should I try to fix this?", "Should I skip this step?", "What command should I use instead?").
+            *   **Do NOT continue with subsequent steps until the user provides instructions.**
+        *   **Track Modified Files:** After successfully executing a step, if it involved creating or modifying files, add their paths to the `MODIFIED_FILES` list.
+        *   **Mark Step as Complete:** After successful execution of a step, update the `PLAN_CONTENT` by replacing `[ ]` with `[x]` for that specific step.
+        *   **Save Progress:** Save the updated `PLAN_CONTENT` back to the `plan.md` file.
+
+4.  **Post-Execution Tasks (after all steps are marked `[x]` and saved):**
+
+    *   **Code Review of Modified Files:**
+        *   If `MODIFIED_FILES` is not empty, use `codebase_investigator` with the objective: "Perform a thorough code review of the following files for quality, adherence to conventions, and potential bugs: [list of `MODIFIED_FILES`]. Consider the project conventions provided in `CONVENTIONS_CONTENT`."
+        *   Supplement this with direct reading and analysis of `MODIFIED_FILES` if deemed necessary for a comprehensive review.
+        *   Report the findings of the code review to the user.
+
+    *   **Run Tests:**
+        *   **Discover Test Command:**
+            *   Attempt to find the project's test command by analyzing common files like `package.json` (for `test` scripts), `Makefile`, `README.md`, or common test runner configuration files (e.g., `pytest.ini`, `jest.config.js`).
+            *   If a test command cannot be reliably discovered, you MUST ask the user: "Не удалось автоматически определить команду для запуска тестов. Пожалуйста, укажите команду для запуска тестов, покрывающих измененные файлы."
+        *   **Execute Tests:**
+            *   Run the discovered (or user-provided) test command.
+            *   **Crucial Error Handling:** If tests fail, you MUST immediately:
+                *   Report the failure to the user, explaining the error.
+                *   Ask the user for guidance (e.g., "Should I attempt to fix the failing tests?", "Should I revert changes?", "What should be done next?").
+                *   **Do NOT proceed to the management report until the user provides instructions.**
+            *   If tests pass, confirm to the user: "Все тесты прошли успешно."
+
+    *   **Generate Management Report:**
+        *   Create a new section at the end of the `plan.md` file titled "## Отчет для менеджера".
+        *   Summarize the completed work in a high-level, non-technical manner.
+        *   For each significant action or feature implemented, describe *what was achieved* from a business or user perspective. **Each description should be in the imperative form, answering "что сделать?" (what to do?), for example: "Добавить временную миграцию" (Add a temporary migration).** Avoid technical jargon, file names, or code details.
+        *   The report should clearly demonstrate the value and scope of the completed work, detailing all changes and improvements made.
+        *   Append this report to the `plan.md` file.
+
+The final output should be the path to the updated plan file and a confirmation that the plan execution and post-execution tasks are complete.
+"""
