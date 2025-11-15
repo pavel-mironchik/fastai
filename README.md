@@ -16,7 +16,7 @@ Fast AI is a blazing-fast AI coding framework for solo developers and small team
 
 ### 1. Install the Gemini CLI commands
 
-Copy everything from the `gemini/` folder into your local Gemini commands folder so they show up as `/fastai-create-brief`, `/fastai-create-plan`, and `/fastai-execute-plan`.
+Copy everything from the `gemini/` folder into your local Gemini commands folder so they show up as `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
 
 ```bash
 mkdir -p ~/.gemini/commands/fastai
@@ -33,12 +33,13 @@ cp gemini/*.toml ~/.gemini/commands/fastai/
 
 ### 2. Install the GPT Codex prompts
 
-Codex CLI looks for Markdown prompts directly under `~/.codex/prompts`. Copy the files from `codex/` into that directory and add the `fastai-` prefix so they become `/fastai-create-brief`, `/fastai-create-plan`, and `/fastai-execute-plan`.
+Codex CLI looks for Markdown prompts directly under `~/.codex/prompts`. Copy the files from `codex/` into that directory and add the `fastai-` prefix so they become `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
 
 ```bash
 mkdir -p ~/.codex/prompts
 cp codex/create-brief.md ~/.codex/prompts/fastai-create-brief.md
 cp codex/create-plan.md ~/.codex/prompts/fastai-create-plan.md
+cp codex/preview-plan.md ~/.codex/prompts/fastai-preview-plan.md
 cp codex/execute-plan.md ~/.codex/prompts/fastai-execute-plan.md
 ```
 
@@ -47,6 +48,7 @@ cp codex/execute-plan.md ~/.codex/prompts/fastai-execute-plan.md
 > ```bash
 > ln -s "$PWD/codex/create-brief.md" ~/.codex/prompts/fastai-create-brief.md
 > ln -s "$PWD/codex/create-plan.md" ~/.codex/prompts/fastai-create-plan.md
+> ln -s "$PWD/codex/preview-plan.md" ~/.codex/prompts/fastai-preview-plan.md
 > ln -s "$PWD/codex/execute-plan.md" ~/.codex/prompts/fastai-execute-plan.md
 > ```
 >
@@ -109,6 +111,15 @@ Running each step in a **fresh CLI session** keeps context short and results cri
 - **Gemini CLI invocation:** `/fastai-create-plan .fastai/features/005_payments/brief.md` (just pass the path; no `KEY=value`). If you omit the argument entirely, the command auto-detects the latest brief and only asks for a path if none exist.
 - **GPT Codex invocation:** `/fastai-create-plan BRIEF_PATH=.fastai/features/005_payments/brief.md`. Likewise, you can run `/fastai-create-plan` with no arguments—Codex will look up the newest brief and request a path if it can’t find one.
 
+#### Optional Step — `/fastai-preview-plan`
+
+- This step is optional—skip it for small or straightforward tasks. Use it only when the plan feels complex enough to justify the extra check.
+- Run the command before execution when you want a dry run. It loads the same `plan.md`, all conventions, and `lessons.md`, then analyzes every step without touching the working tree.
+- Output highlights pending steps, risks, dependencies, open questions, and suggested pre-checks/tests so you can fix issues before editing code.
+- In practice, it turns potential surprises into known action items: you see narrow spots upfront, know what to ask the user, and line up the tests you’ll need. That saves time versus re-running `/fastai-execute-plan` after mistakes.
+- **Gemini CLI invocation:** `/fastai-preview-plan [.fastai/features/005_payments/plan.md]` (plain path argument is optional; omit it to preview the latest plan).
+- **GPT Codex invocation:** `/fastai-preview-plan [PLAN_PATH=.fastai/features/005_payments/plan.md]`. As always, leave `PLAN_PATH` blank to let the command find the newest plan automatically.
+
 ### Step 3 — `/fastai-execute-plan` (new session recommended)
 
 - The agent opens `plan.md`, skips any steps already marked `[x]`, and executes each remaining `[ ]` item in order.
@@ -143,6 +154,7 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 - **Make sure the repo is writable.** Commands create directories beneath `.fastai/features/`. If permissions are read-only, they will fail immediately.
 - **Structured answers matter.** The brief command expects numbered replies; unstructured text makes the template harder to fill accurately.
 - **Confirm before overwriting.** If you rerun `/fastai-create-plan`, decide whether to reuse the existing `plan.md` or replace it. The command will prompt, but double-check to avoid losing work.
+- **Preview only when it’s worth it.** `/fastai-preview-plan` is optional and adds overhead, so skip it for tiny tasks. Use it when you want a dry run that surfaces risks, questions for the user, and the tests you’ll need before running `/fastai-execute-plan`.
 - **Resume execution safely.** `/fastai-execute-plan` intentionally skips `[x]` steps so you can restart it after a break without redoing completed work.
 - **Share the management report.** The final section avoids file names and highlights business value—perfect for status updates or sprint reviews.
 - **Language-indifferent behavior.** Even though the templates are in English, the commands automatically respond in the user's language (briefs, plans, and the final manager report included).
@@ -153,12 +165,14 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 
 - `/fastai-create-brief` — no arguments needed.
 - `/fastai-create-plan [optional_path_to_brief.md]` — pass just the path if you want a specific brief; otherwise omit it and the command finds the latest brief or asks for one.
+- `/fastai-preview-plan [optional_path_to_plan.md]` — review steps, risks, and test expectations without modifying files.
 - `/fastai-execute-plan [optional_path_to_plan.md]` — same pattern: provide a path if you want to override the auto-detected latest plan.
 
 **GPT Codex**
 
 - `/fastai-create-brief` — no arguments needed.
 - `/fastai-create-plan [optional BRIEF_PATH=...]` — e.g., `/fastai-create-plan BRIEF_PATH=.fastai/features/005_payments/brief.md`. Without the argument, Codex locates the latest brief and prompts you only if it can’t find one.
+- `/fastai-preview-plan [optional PLAN_PATH=...]` — e.g., `/fastai-preview-plan PLAN_PATH=.fastai/features/005_payments/plan.md`. Skipping the argument previews the latest plan automatically.
 - `/fastai-execute-plan [optional PLAN_PATH=...]` — e.g., `/fastai-execute-plan PLAN_PATH=.fastai/features/005_payments/plan.md`. As above, omitting `PLAN_PATH` lets Codex auto-discover the current plan.
 
 ---
@@ -169,5 +183,6 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 - Enrich `.fastai/conventions/` with your own coding guides, release checklists, and the ever-growing `lessons.md` so every run benefits from accumulated knowledge.
 - Add more project-specific commands (e.g., regression test suites or QA checklists) alongside the core trio.
 - Open an issue or PR if you discover improvements—the framework keeps evolving through real-world use.
+- Know when to scale up: Fast AI is intentionally lightweight. If your work grows into multi-team, multi-service programs with large release trains, switch to a heavier framework (or bespoke automation) that matches the new complexity.
 
 Happy shipping! Let the brief → plan → execute cadence help you deliver fast, consistent results.***
