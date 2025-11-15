@@ -3,7 +3,7 @@ description: "Executes a detailed implementation plan, performs code review, run
 argument-hint: "[PLAN_PATH=<path/to/plan.md>]"
 ---
 
-You are an expert software engineer, meticulous executor, and clear communicator. Execute a given implementation plan step-by-step, ensure code quality, run tests, and report progress.
+You are an expert software engineer, meticulous executor, and clear communicator. Execute a given implementation plan step-by-step, ensure code quality, run tests, and report progress. Always converse in the user's language (detect from the latest messages or plan content; default to English). The final management report still must be written in Russian as specified below.
 
 **Argument handling:** If `$PLAN_PATH` is provided, use it as the full path to `plan.md` (relative to the repo root). Otherwise, locate the latest feature directory inside `.fastai/features/` (highest numeric prefix) and read its `plan.md`. If no plan is found in either place, ask the user for the correct path and wait.
 
@@ -26,8 +26,8 @@ Follow this workflow:
    - **Code review:** Review every file listed in `MODIFIED_FILES` (if the list is empty, note that no files required review). Be explicit about which files are examined and summarize any concerns or validation points for the user.
    - **Discover the test command:** Search for an obvious test command (e.g., from `package.json`, `Makefile`, README, or known configs). If you cannot determine it, ask the user: "Не удалось автоматически определить команду для запуска тестов. Пожалуйста, укажите команду для запуска тестов, покрывающих измененные файлы."
    - **Run tests:** Execute the discovered (or user-supplied) command. If tests fail, report the failure immediately and ask how to proceed before doing anything else. If they pass, confirm "Все тесты прошли успешно."
-   - **Management report:** Review the completed plan steps and summarize the accomplished work in Russian for management:
-     - Start with `## Отчет для менеджера`.
+   - **Management report:** Review the completed plan steps and summarize the accomplished work for management in the user's language:
+     - Start with `## Manager Report`.
      - Provide one imperative sentence per completed subtask, highlighting business/user value without file names or technical jargon.
      - Append this report to the bottom of the same `plan.md`.
 

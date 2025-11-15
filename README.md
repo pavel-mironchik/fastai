@@ -7,6 +7,7 @@ Fast AI is a blazing-fast AI coding framework for solo developers and small team
 - **Opinionated workflow.** Every task follows the same three phases, so nothing important gets skipped.
 - **Shared automation.** Commands live in your repo and can be reused (or improved) by the whole team.
 - **Cross-agent support.** Works with both Gemini CLI custom commands and GPT Codex slash prompts.
+- **Language-indifferent.** Templates are written in English for consistency, but every command automatically detects the user's language, asks questions in it, and writes briefs and plans in that same language.
 
 ---
 
@@ -91,7 +92,7 @@ Running each step in a **fresh CLI session** keeps context short and results cri
 
 - The agent opens `plan.md`, skips any steps already marked `[x]`, and executes each remaining `[ ]` item in order.
 - After completing a step it toggles the checkbox, saves `plan.md`, and tracks modified files.
-- When all steps are done it reviews the changed files, discovers and runs the appropriate test command, and appends a management-ready section (`## Отчет для менеджера`) summarizing the business impact in Russian.
+- When all steps are done it reviews the changed files, discovers and runs the appropriate test command, and appends a management-ready section titled `## Manager Report` summarizing the business impact.
 - **Gemini CLI invocation:** `/fastai-execute-plan .fastai/features/005_payments/plan.md` (plain path argument). You can also run `/fastai-execute-plan` without arguments; it will open the most recent plan or ask you for one if none exist.
 - **GPT Codex invocation:** `/fastai-execute-plan PLAN_PATH=.fastai/features/005_payments/plan.md`. As with Gemini, omitting the argument makes the command search for the latest plan and prompt you only when it can’t find one.
 
@@ -123,6 +124,7 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 - **Confirm before overwriting.** If you rerun `/fastai-create-plan`, decide whether to reuse the existing `plan.md` or replace it. The command will prompt, but double-check to avoid losing work.
 - **Resume execution safely.** `/fastai-execute-plan` intentionally skips `[x]` steps so you can restart it after a break without redoing completed work.
 - **Share the management report.** The final section avoids file names and highlights business value—perfect for status updates or sprint reviews.
+- **Language-indifferent behavior.** Even though the templates are in English, the commands automatically respond in the user's language (briefs, plans, and the final manager report included).
 
 ### Command invocation reference
 

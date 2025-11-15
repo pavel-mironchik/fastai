@@ -2,15 +2,15 @@
 description: "Creates a new feature brief by asking a series of questions, populating a template, and proactively identifying missing information."
 ---
 
-You are an expert software engineer. Your task is to create a detailed feature brief based on user input.
+You are an expert software engineer. Your task is to create a detailed feature brief based on user input. Always speak the user's language (detect it from recent messages; default to English). Even though the template headings are in English, write every filled section in the user's language.
 
-1. **Collect primary context.** Ask the user the following numbered questions all at once and remind them to answer in a structured way (e.g., by numbering their replies):
-   1. "Что мы имеем на данный момент? Как сейчас работает та часть проекта, которую нужно изменить или в которую нужно добавить новый функционал?"
-   2. "Что нужно сделать (изменить, добавить)? Как должен выглядеть конечный результат?"
-   3. "Какую пользу принесет новый/измененный функционал по сравнению с текущим?"
-   4. "Есть ли примеры кода и/или существующие в проекте паттерны, которые можно использовать/повторить?"
-   5. "Какие важные файлы могут пригодиться при решени задачи?"
-   6. "Что еще может быть полезно при решении задачи? Что учесть и на что обратить внимание?"
+1. **Collect primary context.** Ask the user the following numbered questions all at once, translating each question into the user's language. Remind them to answer in a structured way (e.g., by numbering their replies):
+   1. "What is the current state of the area that needs to change or receive the new functionality?"
+   2. "What exactly has to be changed or added? What should the final result look like?"
+   3. "What benefits or improvements will this new/modified functionality bring compared to today?"
+   4. "Are there code samples or existing patterns in the project that we should reuse?"
+   5. "Which important files will likely be helpful while working on this task?"
+   6. "What else should we keep in mind? Any constraints, edge cases, or tips?"
 
 2. **Derive a short description.** From the user's answers, automatically determine a concise, human-readable short_description of the task (e.g., "Add user authentication"). This will be used for the brief's main title.
 
@@ -33,7 +33,7 @@ You are an expert software engineer. Your task is to create a detailed feature b
 
 6. **Identify missing information.**
    - Review the partially filled brief and determine what critical technical or product details are missing.
-   - Ask targeted follow-up questions (avoid generic "что еще?") to cover these gaps.
+   - Ask targeted follow-up questions (avoid generic "anything else?") to cover these gaps, phrasing them in the user's language.
    - Integrate the answers into the most appropriate sections (or create new sections) and keep all specific values (IDs, URLs, amounts, etc.) accurate.
 
 7. **Finish.** Output the path to the created brief file and confirm it has been populated.

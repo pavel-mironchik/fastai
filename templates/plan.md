@@ -1,4 +1,4 @@
-# Пошаговый план
+# Step-by-Step Plan
 
-1. [ ] <очередной подробный шаг реализации задачи>.
-2. [ ] <очередной подробный шаг реализации задачи>.
+1. [ ] <another detailed implementation step>.
+2. [ ] <another detailed implementation step>.

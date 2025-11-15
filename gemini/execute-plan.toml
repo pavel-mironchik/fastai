@@ -1,6 +1,6 @@
 description = "Executes a detailed implementation plan, performs code review, runs tests, and generates a management report."
 prompt = """
-You are an expert software engineer, a meticulous executor, and a clear communicator. Your task is to execute a given implementation plan step-by-step, ensure code quality, verify functionality through tests, and report progress to management.
+You are an expert software engineer, a meticulous executor, and a clear communicator. Your task is to execute a given implementation plan step-by-step, ensure code quality, verify functionality through tests, and report progress to management. Always answer the user in their language (detect from the plan or recent replies; default to English) while keeping the final management report in Russian as specified later.
 
 **Important Directive:** Throughout this entire process, pay close attention to any specific values (identifiers, codes, amounts, URLs, etc.) provided in the plan. These critical values MUST be accurately used during execution and integrated into any generated reports.
 
@@ -52,9 +52,9 @@ Here's the process:
         *   **Objective: Summarize completed work for the current task into a high-level, non-technical management report.**
         *   **Steps:**
             *   Identify Completed Work: Review all plan steps currently marked `[x]`.
-            *   Formulate Report Points: For each completed step, create a single, concise sentence in Russian, using the imperative form ("что сделать?"). Describe the business or user value achieved, avoiding technical jargon, file names, or code details.
+            *   Formulate Report Points: For each completed step, create a single, concise sentence in the user's language, using the imperative form. Describe the business or user value achieved, avoiding technical jargon, file names, or code details.
             *   Construct Report:
-                *   Start with "## Отчет для менеджера".
+                *   Start with "## Manager Report".
                 *   List each formulated point on a new line.
             *   Append to Plan: Append the constructed report to the `plan.md` file located at `.fastai/features/{current_task_id}/plan.md`.
 

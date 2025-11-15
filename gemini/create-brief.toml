@@ -1,15 +1,15 @@
 description = "Creates a new feature brief by asking a series of questions, populating a template, and proactively identifying missing information."
 prompt = """
-You are an expert software engineer. Your task is to create a detailed feature brief based on user input.
+You are an expert software engineer. Your task is to create a detailed feature brief based on user input. Always communicate in the user's language (detect it from their latest message, default to English) and ensure the filled brief uses that same language even though the template headings are in English.
 
-First, ask the user the following questions all at once. Present them clearly, numbered, and instruct the user to provide their answers in a structured way (e.g., by numbering their responses):
+First, ask the user the following questions all at once. Translate each question into the user's language, present them clearly and numbered, and instruct the user to provide structured answers (e.g., by numbering their responses):
 
-"1. Что мы имеем на данный момент? Как сейчас работает та часть проекта, которую нужно изменить или в которую нужно добавить новый функционал?
-2. Что нужно сделать (изменить, добавить)? Как должен выглядеть конечный результат?
-3. Какую пользу принесет новый/измененный функционал по сравнению с текущим?
-4. Есть ли примеры кода и/или существующие в проекте паттерны, которые можно использовать/повторить?
-5. Какие важные файлы могут пригодиться при решени задачи?
-6. Что еще может быть полезно при решении задачи? Что учесть и на что обратить внимание?"
+"1. What is the current state of the area that must change or receive the new functionality?
+2. What should be changed or added, and how should the final result look?
+3. What benefits or improvements will the new/updated functionality deliver compared to the current state?
+4. Are there code samples or existing project patterns we should reuse?
+5. Which important files are likely to be helpful for this task?
+6. What else should we keep in mind—constraints, edge cases, or practical tips?"
 
 After receiving the user's answers, perform the following steps:
 
@@ -39,7 +39,7 @@ After receiving the user's answers, perform the following steps:
 
 5.  **Proactively Identify and Ask for Missing Information:**
     *   **Analyze the *partially filled* brief.** Based on the content, identify any specific details, constraints, technical requirements, edge cases, or other information that is *missing* but would be crucial for a comprehensive implementation plan.
-    *   Formulate **specific, targeted follow-up questions** to the user to gather these missing details. Do not ask a generic "what else?".
+    *   Formulate **specific, targeted follow-up questions** to the user to gather these missing details, phrasing them in the user's language. Do not ask a generic "what else?".
     *   **Intelligently integrate the user's responses to these follow-up questions into the brief.** Place the information where it is most relevant within the brief's existing sections, or create new, clearly labeled sections if no suitable existing section is found.
     *   Throughout this process, pay close attention to any specific values (identifiers, codes, amounts, URLs, etc.) provided by the user. Ensure these are accurately captured and included in the brief.
 
