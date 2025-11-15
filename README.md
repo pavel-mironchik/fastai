@@ -67,6 +67,22 @@ The commands expect these files in your repo:
 
 Keep them committed and up to date. If you move or rename them, update the command files accordingly.
 
+#### How to use `.fastai/conventions/`
+
+Every Markdown file in `.fastai/conventions/` is injected as context before plans are generated or executed. Split guidance into focused files so it stays readable. Typical files you might create:
+
+- `agent.md` — define the agent’s persona (“Act as a senior backend lead”, “Prioritize performance over features”).
+- `coding_style.md` — document project/team conventions (indentation, naming schemes, migration filename formats, when to add comments, etc.).
+- `frontend_hints.md` — share UI/UX patterns (how to wire Blade to Vue, how to run asset builds, which components should be reused).
+- `important.md` — list project-wide constraints (what parts of the repo are off-limits, testing expectations, how to verify external dependencies).
+- `patterns.md` — explain reusable architectural recipes (how to seed reference data, when to use Jobs vs direct model calls, integration strategies).
+- `project_details.md` — describe the repository structure, technology stack, entry points, translation requirements, release/versioning notes.
+
+Add new `.md` files anytime you find something worth noting (“QA checklist”, “Release process”, “API integration tips”). Convert that knowledge into concise bullets under the relevant file so future runs inherit it automatically.
+
+> **Why briefs skip conventions**  
+> The brief command intentionally ignores `.fastai/conventions/`. Its job is to capture requirements quickly, so extra code-style or architecture context would only distract it. Conventions are pulled in when the plan is generated and when the plan is executed—exactly when those rules matter for writing code. This keeps the brief lightweight while still ensuring later stages follow every guideline.
+
 ---
 
 ## The Fast AI 3-Step Workflow
