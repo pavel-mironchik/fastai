@@ -1,6 +1,6 @@
 # ⚡️ Fast AI 🤖
 
-Fast AI is a blazing-fast AI coding framework for solo developers and small teams. It shines on small-to-medium projects because it enforces a simple three-step rhythm **brief → plan → execute** that keeps quality high without wasting time.
+Fast AI is a blazing-fast AI coding framework for solo developers and small teams. It shines on small-to-medium projects because it enforces a simple three-step rhythm **BRIEF → PLAN → EXECUTE** that keeps quality high without wasting time.
 
 ## Why Fast AI?
 
@@ -228,6 +228,6 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 - Enrich `.fastai/conventions/` with your own coding guides, release checklists, and the ever-growing `lessons.md` so every run benefits from accumulated knowledge.
 - Add more project-specific commands (e.g., regression test suites or QA checklists) alongside the core trio.
 - Open an issue or PR if you discover improvements—the framework keeps evolving through real-world use.
-- Know when to scale up: Fast AI is intentionally lightweight. If your work grows into multi-team, multi-service programs with large release trains, switch to a heavier framework (or bespoke automation) that matches the new complexity.
+- Know when to scale up: Fast AI is intentionally lightweight. If your work grows into multi-team, multi-service programs with large release trains, switch to a heavier framework (or bespoke automation) that matches the new complexity. Two popular next steps are [Spec Kit](https://github.com/github/spec-kit) for full spec-driven development (briefs, specs, test flow) and [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) when you need a multi-agent, workflow-rich system with built-in orchestration.
 
 Happy shipping! Let the brief → plan → execute cadence help you deliver fast, consistent results.***
