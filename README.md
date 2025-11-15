@@ -10,20 +10,44 @@ Fast AI is a blazing-fast AI coding framework for solo developers and small team
 - **Language-indifferent.** Templates are written in English for consistency, but every command automatically detects the user's language, asks questions in it, and writes briefs and plans in that same language.
 - **Built-in self-learning.** After each plan execution, Fast AI writes new lessons to `.fastai/conventions/lessons.md`, so the workflow continuously adapts to feedback without extra configuration.
 
+## Add Fast AI to your project
+
+Drop the framework files straight into the root of any repo where you want to run the brief → plan → execute loop. You only need the `.fastai/` directory from this repository — everything (commands, prompts, templates, and conventions) lives inside it.
+
+1. **Using `git clone`.**
+   ```bash
+   cd /path/to/your-project
+   git clone https://github.com/pavel-mironchik/fastai fastai-tmp
+   cp -R fastai-tmp/.fastai .
+   rm -rf fastai-tmp
+   ```
+   Commit the copied `.fastai/` folder to your repo so teammates can reuse the workflow.
+
+2. **Downloading an archive.**
+   ```bash
+   cd /path/to/your-project
+   curl -L https://github.com/pavel-mironchik/fastai/archive/refs/heads/main.tar.gz | tar -xz
+   cp -R fastai-main/.fastai .
+   rm -rf fastai-main
+   ```
+   (If you prefer ZIPs, replace the `curl | tar` line with `curl -L ...main.zip -o fastai.zip && unzip fastai.zip`.)
+
+After copying the framework folder, follow the rest of this guide to wire the CLI commands into Gemini or Codex on your machine.
+
 ---
 
 ## Getting Started
 
 ### 1. Install the Gemini CLI commands
 
-Copy everything from the `gemini/` folder into your local Gemini commands folder so they show up as `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
+Copy everything from `.fastai/gemini/` into your local Gemini commands folder so they show up as `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
 
 ```bash
 mkdir -p ~/.gemini/commands/fastai
-cp gemini/*.toml ~/.gemini/commands/fastai/
+cp .fastai/gemini/*.toml ~/.gemini/commands/fastai/
 ```
 
-> Prefer symlinks? Run `ln -s "$PWD/gemini/"* ~/.gemini/commands/fastai/` instead of copying. This keeps the commands editable inside the repo while exposing the latest versions to Gemini CLI automatically.
+> Prefer symlinks? Run `ln -s "$PWD/.fastai/gemini/"* ~/.gemini/commands/fastai/` instead of copying. This keeps the commands editable inside the repo while exposing the latest versions to Gemini CLI automatically.
 
 **Important details**
 
@@ -33,23 +57,23 @@ cp gemini/*.toml ~/.gemini/commands/fastai/
 
 ### 2. Install the GPT Codex prompts
 
-Codex CLI looks for Markdown prompts directly under `~/.codex/prompts`. Copy the files from `codex/` into that directory and add the `fastai-` prefix so they become `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
+Codex CLI looks for Markdown prompts directly under `~/.codex/prompts`. Copy the files from `.fastai/codex/` into that directory and add the `fastai-` prefix so they become `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
 
 ```bash
 mkdir -p ~/.codex/prompts
-cp codex/create-brief.md ~/.codex/prompts/fastai-create-brief.md
-cp codex/create-plan.md ~/.codex/prompts/fastai-create-plan.md
-cp codex/preview-plan.md ~/.codex/prompts/fastai-preview-plan.md
-cp codex/execute-plan.md ~/.codex/prompts/fastai-execute-plan.md
+cp .fastai/codex/create-brief.md ~/.codex/prompts/fastai-create-brief.md
+cp .fastai/codex/create-plan.md ~/.codex/prompts/fastai-create-plan.md
+cp .fastai/codex/preview-plan.md ~/.codex/prompts/fastai-preview-plan.md
+cp .fastai/codex/execute-plan.md ~/.codex/prompts/fastai-execute-plan.md
 ```
 
 > Prefer symlinks? Run:
 >
 > ```bash
-> ln -s "$PWD/codex/create-brief.md" ~/.codex/prompts/fastai-create-brief.md
-> ln -s "$PWD/codex/create-plan.md" ~/.codex/prompts/fastai-create-plan.md
-> ln -s "$PWD/codex/preview-plan.md" ~/.codex/prompts/fastai-preview-plan.md
-> ln -s "$PWD/codex/execute-plan.md" ~/.codex/prompts/fastai-execute-plan.md
+> ln -s "$PWD/.fastai/codex/create-brief.md" ~/.codex/prompts/fastai-create-brief.md
+> ln -s "$PWD/.fastai/codex/create-plan.md" ~/.codex/prompts/fastai-create-plan.md
+> ln -s "$PWD/.fastai/codex/preview-plan.md" ~/.codex/prompts/fastai-preview-plan.md
+> ln -s "$PWD/.fastai/codex/execute-plan.md" ~/.codex/prompts/fastai-execute-plan.md
 > ```
 >
 > Symlinking keeps the prompts editable in-repo while Codex always reads the latest version from `~/.codex/prompts`.
