@@ -1,6 +1,6 @@
 # ⚡️ Fast AI 🤖
 
-Fast AI is a blazing-fast AI coding framework for solo developers and small teams. It shines on small-to-medium projects because it enforces a simple three-step rhythm—**brief → plan → execute**—that keeps quality high without wasting time.
+Fast AI is a blazing-fast AI coding framework for solo developers and small teams. It shines on small-to-medium projects because it enforces a simple three-step rhythm **brief → plan → execute** that keeps quality high without wasting time.
 
 ## Why Fast AI?
 
@@ -38,7 +38,11 @@ After copying the framework folder, follow the rest of this guide to wire the CL
 
 ## Getting Started
 
-### 1. Install the Gemini CLI commands
+### 1. Manual installation
+
+Run the commands below yourself (they only touch your home directory) or hand them to an agent via the prompt in the next section.
+
+#### 1.1 Gemini CLI commands
 
 Copy everything from `.fastai/gemini/` into your local Gemini commands folder so they show up as `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
 
@@ -55,7 +59,7 @@ cp .fastai/gemini/*.toml ~/.gemini/commands/fastai/
 - Commands inherit their names from the file path. Placing them under `~/.gemini/commands/fastai` produces the `/fastai-create-brief` style names we want.
 - If you already have commands with those names, back them up before copying to avoid overwriting them.
 
-### 2. Install the GPT Codex prompts
+#### 1.2 GPT Codex prompts
 
 Codex CLI looks for Markdown prompts directly under `~/.codex/prompts`. Copy the files from `.fastai/codex/` into that directory and add the `fastai-` prefix so they become `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
 
@@ -83,6 +87,23 @@ cp .fastai/codex/execute-plan.md ~/.codex/prompts/fastai-execute-plan.md
 - Codex scans only the top level of `~/.codex/prompts`, so avoid subdirectories.
 - Restart Codex (or begin a new chat) after copying so it picks up the new slash commands.
 - Feel free to version-control these prompt files so the team stays in sync when they change.
+
+### 2. Prompt to let an agent install it for you
+
+Prefer to stay hands-off? Paste the snippet below into any agent running from the repo root (Gemini CLI or GPT Codex). It reads this README for context, asks which agent(s) you need to install Fast AI for (Gemini CLI, GPT Codex, or both), asks whether you prefer copying or symlinking, and then runs the necessary shell commands — requesting approval whenever it needs to touch directories outside the workspace. Creating directories such as `~/.gemini/commands/fastai` or `~/.codex/prompts` with `mkdir -p` is safe even when they already exist, and the agent will detect any previously installed Fast AI files before overwriting or relinking them.
+
+> Agents occasionally fail to finish this workflow — maybe they mis-detect an existing path, forget to request elevated permissions, or simply lose context mid-run. If it stalls, start a fresh chat and try again — or fall back to the manual commands above.
+
+```text
+You are inside the Fast AI repository root. Read README.md to understand how the Gemini and Codex commands must be installed (copy vs symlink). Ask me which agent(s) I actually use (Gemini CLI, GPT Codex, or both), and ask whether I prefer copying or symlinking. Then run the required shell commands for the agent(s) I selected:
+
+1. If Gemini CLI is selected, ensure ~/.gemini/commands/fastai exists (explain that `mkdir -p` is harmless if it already exists).
+2. For Gemini CLI, either copy (.fastai/gemini/*.toml -> ~/.gemini/commands/fastai/*.toml) or create symlinks, depending on my answer. When the destination file already exists, ask whether to overwrite, relink, or skip it.
+3. If GPT Codex is selected, ensure ~/.codex/prompts exists (again, make it clear that re-running `mkdir -p` is safe).
+4. For GPT Codex, copy or symlink .fastai/codex/*.md into ~/.codex/prompts with the `fastai-` prefix (e.g., fastai-create-plan.md). As above, check each destination before overwriting or relinking.
+
+Whenever a command touches files outside the repository, ask for permission so I can approve it. After running the commands, list what was installed, clarify how existing files were handled, and remind me to restart Gemini/Codex so they detect the new files.
+```
 
 ### 3. Templates and conventions
 
