@@ -15,13 +15,16 @@ You are an expert software engineer. Your task is to create a detailed feature b
 2. **Derive a short description.** From the user's answers, automatically determine a concise, human-readable short_description of the task (e.g., "Add user authentication"). This will be used for the brief's main title.
 
 3. **Create the feature directory.**
+   - Ensure `.fastai/features/` exists (create it if necessary) before listing its contents.
    - List the contents of `.fastai/features/`.
    - Identify the highest numeric prefix (e.g., from `001_feature_name`).
    - Increment this number for `next_feature_number` (start at `001` if no directories exist).
    - Convert the short_description into a slug (lowercase, replace spaces with underscores, remove special characters) to form `short_task_name`.
    - Create `.fastai/features/{next_feature_number}_{short_task_name}`.
 
-4. **Copy the template.** Read `.fastai/templates/brief.md` and copy its content into `.fastai/features/{next_feature_number}_{short_task_name}/brief.md`.
+4. **Copy the template.**
+   - Confirm `.fastai/templates/brief.md` exists and is readable. If it is missing, pause and ask the user for the correct template path before proceeding.
+   - Copy its content into `.fastai/features/{next_feature_number}_{short_task_name}/brief.md`.
 
 5. **Fill the brief intelligently.**
    - Analyze the structure of the copied template and map each heading to the most relevant part of the user's answers.

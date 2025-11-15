@@ -5,7 +5,7 @@ argument-hint: "[BRIEF_PATH=<path/to/brief.md>]"
 
 You are an expert software engineer and meticulous planner. Build a detailed, step-by-step implementation plan that follows project conventions and existing code.
 
-**Argument handling:** If `$BRIEF_PATH` is provided, treat it as the explicit path to the brief (relative to the repo root). Otherwise, infer the latest brief by scanning `.fastai/features/` for the directory with the highest numeric prefix and reading its `brief.md`. If no brief exists after both attempts, ask the user for the path and pause until it is supplied.
+**Argument handling:** If `$BRIEF_PATH` is provided, treat it as the explicit path to the brief (relative to the repo root) and verify that the file exists before proceeding. If validation fails, ask the user for a corrected path. Otherwise, infer the latest brief by scanning `.fastai/features/` for the directory with the highest numeric prefix and reading its `brief.md`. If no brief exists after both attempts, ask the user for the path and pause until it is supplied.
 
 Follow this process:
 
@@ -20,7 +20,8 @@ Follow this process:
    - Read `.fastai/templates/plan.md` to understand the required format (numbered list with checkboxes).
    - Compose actionable steps covering design, code changes, testing, and deployment (if relevant). Respect all constraints and critical values from `BRIEF_CONTENT`, `CONVENTIONS_CONTENT`, and `CODEBASE_CONTEXT`.
 5. **Copy and fill the plan template.**
-   - Copy the template content into a new `plan.md` in the same directory as the brief.
+   - Before copying, check whether a `plan.md` already exists in the same directory. If it does, confirm with the user before overwriting; otherwise, reuse the existing file.
+   - Copy the template content into `plan.md`.
    - Replace its placeholder checklist with your generated plan so every step appears as `[ ] Step description` with a preceding step number.
 6. **Identify gaps and ask follow-ups.**
    - Review the plan for missing details, edge cases, or unclear requirements that could block implementation.

@@ -17,6 +17,7 @@ After receiving the user's answers, perform the following steps:
     *   From the user's answers, **automatically determine a concise, human-readable "short_description"** of the task (e.g., "Add user authentication", "Refactor payment module"). This will be used for the brief's main title.
 
 2.  **Create the feature directory:**
+    *   Ensure the `.fastai/features/` directory exists (for example, run `!{mkdir -p .fastai/features}`) before listing it.
     *   List the contents of the `.fastai/features/` directory.
     *   Identify the highest existing feature number (e.g., from `001_feature_name`).
     *   Increment this number by one to get the `next_feature_number` (e.g., `002`). If no features exist, start with `001`.
@@ -24,8 +25,11 @@ After receiving the user's answers, perform the following steps:
     *   Create a new directory: `.fastai/features/{next_feature_number}_{short_task_name}`.
 
 3.  **Copy and Prepare the brief template:**
-    *   **Read the content of the template file `.fastai/templates/brief.md`.**
-    *   Copy this content to a new file in the newly created feature directory (e.g., `.fastai/features/{next_feature_number}_{short_task_name}/brief.md`).
+    *   Use the following template content as the starting point for the new brief (copy it into `.fastai/features/{next_feature_number}_{short_task_name}/brief.md`):
+
+```md
+@{.fastai/templates/brief.md}
+```
 
 4.  **Fill the brief template intelligently:**
     *   **Analyze the structure of the copied `brief.md` file.** Identify its sections and their headings.

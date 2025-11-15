@@ -9,6 +9,7 @@ Here's the process:
 1.  **Identify and Load the Brief:**
     *   Check if a brief file path is provided as `{{args}}`.
     *   If `{{args}}` is empty, list the contents of the `.fastai/features/` directory. Identify the directory with the highest numerical prefix (e.g., `003_feature_name` from `001_...`, `002_...`). Construct the path to the `brief.md` file within that directory.
+    *   Validate that the resulting path exists (for example, run `!{test -f {{args}}}` when the user supplies a path, or an equivalent check for the inferred path). If validation fails, ask the user to provide the correct brief path before continuing.
     *   If no brief is found after checking `{{args}}` and the latest feature directory, you MUST ask the user for the path to the brief file.
     *   Once the brief file path is determined, read its content. Let's refer to this as `BRIEF_CONTENT`.
 
@@ -26,7 +27,13 @@ Here's the process:
 
 5.  **Copy and Fill Plan Template:**
     *   Determine the directory where the brief file is located.
-    *   Copy the *content read from `.fastai/templates/plan.md`* into a new file named `plan.md` within that same directory.
+    *   Before copying, check whether a `plan.md` already exists in that directory. If it does, confirm with the user before overwriting; otherwise, reuse the existing file.
+    *   Use the following template content as the base:
+
+```md
+@{.fastai/templates/plan.md}
+```
+
     *   Replace the placeholder steps in the copied `plan.md` with your generated initial plan.
 
 6.  **Proactively Identify and Ask for Missing Information for the Plan:**

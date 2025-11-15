@@ -17,6 +17,7 @@ Here's the process:
 
 3.  **Execute Plan Steps Sequentially:**
     *   Parse `PLAN_CONTENT` to identify individual steps, looking for lines starting with a number and `[ ]`.
+    *   Skip any steps already marked `[x]` so rerunning the command does not repeat completed work.
     *   Initialize an empty list called `MODIFIED_FILES` to track all files created or changed during execution.
     *   For each identified step:
         *   **Execute the action described in the step.** Use appropriate tools (`run_shell_command`, `write_file`, `replace`, `read_file`, `glob`, `search_file_content`, etc.) as needed.
@@ -31,9 +32,9 @@ Here's the process:
 4.  **Post-Execution Tasks (after all steps are marked `[x]` and saved):**
 
     *   **Code Review of Modified Files:**
-        *   If `MODIFIED_FILES` is not empty, use `codebase_investigator` with the objective: "Perform a thorough code review of the following files for quality, adherence to conventions, and potential bugs: [list of `MODIFIED_FILES`]. Consider the project conventions provided in `CONVENTIONS_CONTENT`."
+        *   If `MODIFIED_FILES` is empty, explicitly state that no files required review. Otherwise, use `codebase_investigator` with the objective: "Perform a thorough code review of the following files for quality, adherence to conventions, and potential bugs: [list of `MODIFIED_FILES`]. Consider the project conventions provided in `CONVENTIONS_CONTENT`."
         *   Supplement this with direct reading and analysis of `MODIFIED_FILES` if deemed necessary for a comprehensive review.
-        *   Report the findings of the code review to the user.
+        *   Report the findings of the code review (or the fact that no review was needed) to the user.
 
     *   **Run Tests:**
         *   **Discover Test Command:**
@@ -50,8 +51,8 @@ Here's the process:
     *   **Generate Management Report:**
         *   **Objective: Summarize completed work for the current task into a high-level, non-technical management report.**
         *   **Steps:**
-            *   Identify Completed Work: Review all `completed` subtasks from the `write_todos` history.
-            *   Formulate Report Points: For each completed subtask, create a single, concise sentence in Russian, using the imperative form ("что сделать?"). Describe the business or user value achieved, avoiding technical jargon, file names, or code details.
+            *   Identify Completed Work: Review all plan steps currently marked `[x]`.
+            *   Formulate Report Points: For each completed step, create a single, concise sentence in Russian, using the imperative form ("что сделать?"). Describe the business or user value achieved, avoiding technical jargon, file names, or code details.
             *   Construct Report:
                 *   Start with "## Отчет для менеджера".
                 *   List each formulated point on a new line.
