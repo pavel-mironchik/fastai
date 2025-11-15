@@ -16,7 +16,7 @@ Here's the process:
     *   Read the content of all Markdown files (`.md`) located in the `.fastai/conventions/` directory. Let's refer to this as `CONVENTIONS_CONTENT`. These files contain project requirements and guidelines that MUST be adhered to during plan execution.
 
 3.  **Execute Plan Steps Sequentially:**
-    *   Parse `PLAN_CONTENT` to identify individual steps, looking for lines starting with a number and`[ ]`.
+    *   Parse `PLAN_CONTENT` to identify individual steps, looking for lines starting with a number and `[ ]`.
     *   Initialize an empty list called `MODIFIED_FILES` to track all files created or changed during execution.
     *   For each identified step:
         *   **Execute the action described in the step.** Use appropriate tools (`run_shell_command`, `write_file`, `replace`, `read_file`, `glob`, `search_file_content`, etc.) as needed.
@@ -48,11 +48,14 @@ Here's the process:
             *   If tests pass, confirm to the user: "Все тесты прошли успешно."
 
     *   **Generate Management Report:**
-        *   Create a new section at the end of the `plan.md` file titled "## Отчет для менеджера".
-        *   Summarize the completed work in a high-level, non-technical manner.
-        *   For each significant action or feature implemented, describe *what was achieved* from a business or user perspective. **Each description should be in the imperative form, answering "что сделать?" (what to do?), for example: "Добавить временную миграцию" (Add a temporary migration).** Avoid technical jargon, file names, or code details.
-        *   The report should clearly demonstrate the value and scope of the completed work, detailing all changes and improvements made.
-        *   Append this report to the `plan.md` file.
+        *   **Objective: Summarize completed work for the current task into a high-level, non-technical management report.**
+        *   **Steps:**
+            *   Identify Completed Work: Review all `completed` subtasks from the `write_todos` history.
+            *   Formulate Report Points: For each completed subtask, create a single, concise sentence in Russian, using the imperative form ("что сделать?"). Describe the business or user value achieved, avoiding technical jargon, file names, or code details.
+            *   Construct Report:
+                *   Start with "## Отчет для менеджера".
+                *   List each formulated point on a new line.
+            *   Append to Plan: Append the constructed report to the `plan.md` file located at `.fastai/features/{current_task_id}/plan.md`.
 
 The final output should be the path to the updated plan file and a confirmation that the plan execution and post-execution tasks are complete.
 """
