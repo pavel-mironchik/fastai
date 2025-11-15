@@ -57,6 +57,11 @@ Here's the process:
                 *   Start with "## Manager Report".
                 *   List each formulated point on a new line.
             *   Append to Plan: Append the constructed report to the `plan.md` file located at `.fastai/features/{current_task_id}/plan.md`.
+    *   **Self-Learning Log:**
+        *   Review the entire session (user instructions, corrections, emotional feedback) and identify mistakes or new constraints that surfaced.
+        *   Convert each insight into a concise bullet that captures the rule, why it matters, and how to avoid the issue.
+        *   Create `.fastai/conventions/lessons.md` if it does not exist, then append the new bullets (include the current date and plan path when possible).
+        *   Skip duplicates — if the lesson already exists, simply note that it was reaffirmed.
 
 The final output should be the path to the updated plan file and a confirmation that the plan execution and post-execution tasks are complete.
 """

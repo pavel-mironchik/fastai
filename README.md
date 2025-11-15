@@ -8,6 +8,7 @@ Fast AI is a blazing-fast AI coding framework for solo developers and small team
 - **Shared automation.** Commands live in your repo and can be reused (or improved) by the whole team.
 - **Cross-agent support.** Works with both Gemini CLI custom commands and GPT Codex slash prompts.
 - **Language-indifferent.** Templates are written in English for consistency, but every command automatically detects the user's language, asks questions in it, and writes briefs and plans in that same language.
+- **Built-in self-learning.** After each plan execution, Fast AI writes new lessons to `.fastai/conventions/lessons.md`, so the workflow continuously adapts to feedback without extra configuration.
 
 ---
 
@@ -77,11 +78,15 @@ Every Markdown file in `.fastai/conventions/` is injected as context before plan
 - `important.md` — list project-wide constraints (what parts of the repo are off-limits, testing expectations, how to verify external dependencies).
 - `patterns.md` — explain reusable architectural recipes (how to seed reference data, when to use Jobs vs direct model calls, integration strategies).
 - `project_details.md` — describe the repository structure, technology stack, entry points, translation requirements, release/versioning notes.
+- `lessons.md` — an agent appends self-learning notes automatically after executing plans so agents avoid repeating mistakes.
 
 Add new `.md` files anytime you find something worth noting (“QA checklist”, “Release process”, “API integration tips”). Convert that knowledge into concise bullets under the relevant file so future runs inherit it automatically.
 
 > **Why briefs skip conventions**  
 > The brief command intentionally ignores `.fastai/conventions/`. Its job is to capture requirements quickly, so extra code-style or architecture context would only distract it. Conventions are pulled in when the plan is generated and when the plan is executed—exactly when those rules matter for writing code. This keeps the brief lightweight while still ensuring later stages follow every guideline.
+
+> **How self-learning works**  
+> After `/fastai-execute-plan` finishes, it reviews the session for user corrections, mistakes, or emotional feedback. Each insight becomes a concise bullet appended to `.fastai/conventions/lessons.md`. Future runs automatically load that file, so the framework keeps improving without manual bookkeeping.
 
 ---
 
@@ -161,6 +166,7 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 ## What’s Next?
 
 - Customize the templates in `.fastai/templates/` to match your internal brief/plan style.
+- Enrich `.fastai/conventions/` with your own coding guides, release checklists, and the ever-growing `lessons.md` so every run benefits from accumulated knowledge.
 - Add more project-specific commands (e.g., regression test suites or QA checklists) alongside the core trio.
 - Open an issue or PR if you discover improvements—the framework keeps evolving through real-world use.
 

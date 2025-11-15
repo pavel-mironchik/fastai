@@ -29,6 +29,10 @@ Follow this workflow:
    - **Management report:** Review the completed plan steps and summarize the accomplished work for management in the user's language:
      - Start with `## Manager Report`.
      - Provide one imperative sentence per completed subtask, highlighting business/user value without file names or technical jargon.
+   - **Self-learning log:** Analyze the entire session for mistakes, user corrections, or emotionally strong feedback.
+     - Extract each actionable lesson (root cause, clarified rule, or new constraint) and write it as a concise bullet.
+     - Create `.fastai/conventions/lessons.md` if it does not exist. Append the new lessons there, ideally prefixed with the date and plan path.
+     - Only add genuinely new guidance; if an identical lesson already exists, leave a brief note confirming it remains valid instead of duplicating it.
      - Append this report to the bottom of the same `plan.md`.
 
 4. **Finish.** Output the path to the updated `plan.md` and confirm that execution, testing, and reporting are complete.
