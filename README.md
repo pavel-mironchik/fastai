@@ -152,8 +152,9 @@ Running each step in a **fresh CLI session** keeps context short and results cri
 
 - The agent loads the latest brief (or a path you provide), reads `.fastai/conventions/*.md`, inspects any referenced code files, and writes an actionable, checkbox-style plan into `plan.md`.
 - It validates that the brief exists, confirms before overwriting an existing plan, and asks targeted follow-up questions to close gaps.
+- Plan files always live beside their briefs. The command automatically writes `.fastai/features/{NNN_slug}/plan.md` and reuses that same file when you rerun the command.
 - When done, it tells you exactly where the finished `plan.md` lives.
-- **Gemini CLI invocation:** `/fastai-create-plan .fastai/features/005_payments/brief.md` (just pass the path; no `KEY=value`). If you omit the argument entirely, the command auto-detects the latest brief and only asks for a path if none exist.
+- **Gemini CLI invocation:** `/fastai-create-plan .fastai/features/005_payments/brief.md`. Passing the brief path pins the command to that feature; omit it entirely to auto-detect the latest brief and only get prompted when none exist.
 - **GPT Codex invocation:** `/fastai-create-plan BRIEF_PATH=.fastai/features/005_payments/brief.md`. Likewise, you can run `/fastai-create-plan` with no arguments—Codex will look up the newest brief and request a path if it can’t find one.
 
 #### Optional Step — `/fastai-preview-plan`
@@ -199,6 +200,7 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 - **Make sure the repo is writable.** Commands create directories beneath `.fastai/features/`. If permissions are read-only, they will fail immediately.
 - **Structured answers matter.** The brief command expects numbered replies; unstructured text makes the template harder to fill accurately.
 - **Confirm before overwriting.** If you rerun `/fastai-create-plan`, decide whether to reuse the existing `plan.md` or replace it. The command will prompt, but double-check to avoid losing work.
+- **Plan location parity.** Plans live in the same feature directory as their briefs. Let `/fastai-create-plan` write `plan.md` automatically and avoid manually moving or renaming it.
 - **Preview only when it’s worth it.** `/fastai-preview-plan` is optional and adds overhead, so skip it for tiny tasks. Use it when you want a dry run that surfaces risks, questions for the user, and the tests you’ll need before running `/fastai-execute-plan`.
 - **Resume execution safely.** `/fastai-execute-plan` intentionally skips `[x]` steps so you can restart it after a break without redoing completed work.
 - **Share the management report.** The final section avoids file names and highlights business value—perfect for status updates or sprint reviews.
@@ -209,7 +211,7 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 **Gemini CLI**
 
 - `/fastai-create-brief` — no arguments needed.
-- `/fastai-create-plan [optional_path_to_brief.md]` — pass just the path if you want a specific brief; otherwise omit it and the command finds the latest brief or asks for one.
+- `/fastai-create-plan [optional_path_to_brief.md]` — pass just the brief path if you want a specific feature; otherwise omit it and the command finds the latest brief or asks for one.
 - `/fastai-preview-plan [optional_path_to_plan.md]` — review steps, risks, and test expectations without modifying files.
 - `/fastai-execute-plan [optional_path_to_plan.md]` — same pattern: provide a path if you want to override the auto-detected latest plan.
 

@@ -7,11 +7,11 @@ You are an expert software engineer and a meticulous planner. Your task is to cr
 Here's the process:
 
 1.  **Identify and Load the Brief:**
-    *   Check if a brief file path is provided as `{{args}}`.
-    *   If `{{args}}` is empty, list the contents of the `.fastai/features/` directory. Identify the directory with the highest numerical prefix (e.g., `003_feature_name` from `001_...`, `002_...`). Construct the path to the `brief.md` file within that directory.
-    *   Validate that the resulting path exists (for example, run `!{test -f {{args}}}` when the user supplies a path, or an equivalent check for the inferred path). If validation fails, ask the user to provide the correct brief path before continuing.
+    *   Treat `{{args}}` (if present) as an optional path to `brief.md`. Trim surrounding whitespace and ignore any trailing tokens—the first path-like token wins.
+    *   If a path was supplied, validate it exists. If no argument is provided, list the contents of the `.fastai/features/` directory, identify the directory with the highest numerical prefix (e.g., `003_feature_name`), and construct the path to its `brief.md`.
+    *   Validate that the resolved `brief.md` exists (for example, run `!{test -f ...}`). If validation fails, ask the user to provide the correct brief path before continuing.
     *   If no brief is found after checking `{{args}}` and the latest feature directory, you MUST ask the user for the path to the brief file.
-    *   Once the brief file path is determined, read its content. Let's refer to this as `BRIEF_CONTENT`.
+    *   Once the brief file path is determined, read its content. Let's refer to this as `BRIEF_CONTENT`. Immediately determine `PLAN_DIR="$(dirname BRIEF_PATH)"` and `PLAN_PATH="${PLAN_DIR}/plan.md"`. All subsequent steps must reference this `PLAN_PATH`.
 
 2.  **Load Project Conventions:**
     *   Read the content of all Markdown files (`.md`) located in the `.fastai/conventions/` directory. Let's refer to this as `CONVENTIONS_CONTENT`. These files contain project requirements and guidelines that MUST be adhered to in the plan.
@@ -26,20 +26,19 @@ Here's the process:
     *   The plan should cover all necessary aspects of implementation, including design considerations, code changes, testing, and deployment (if applicable).
 
 5.  **Copy and Fill Plan Template:**
-    *   Determine the directory where the brief file is located.
-    *   Before copying, check whether a `plan.md` already exists in that directory. If it does, confirm with the user before overwriting; otherwise, reuse the existing file.
+    *   Work exclusively inside `PLAN_DIR`. Before copying, check whether `PLAN_PATH` already exists. If it does, confirm with the user before overwriting; otherwise, reuse the existing file.
     *   Use the following template content as the base:
 
 ```md
 @{.fastai/templates/plan.md}
 ```
 
-    *   Replace the placeholder steps in the copied `plan.md` with your generated initial plan.
+    *   Replace the placeholder steps in `PLAN_PATH` with your generated initial plan.
 
 6.  **Proactively Identify and Ask for Missing Information for the Plan:**
     *   **Analyze the *initial generated plan*.** Based on the plan, the `BRIEF_CONTENT`, `CONVENTIONS_CONTENT`, and `CODEBASE_CONTEXT`, identify any specific details, constraints, technical requirements, edge cases, or other information that is *missing* or unclear but would be crucial for a successful and robust implementation by a developer.
     *   Formulate **specific, targeted follow-up questions** to the user to gather these missing details, phrasing the questions in the user's language. Do not ask a generic "what else?".
     *   **Intelligently integrate the user's responses to these follow-up questions into the plan.** Place the information where it is most relevant within the plan's existing steps, or add new, clearly labeled steps or sections if no suitable existing place is found.
 
-The final output should be the path to the created plan file and a confirmation that it has been populated.
+The final output should be `PLAN_PATH` and a confirmation that it has been populated.
 """

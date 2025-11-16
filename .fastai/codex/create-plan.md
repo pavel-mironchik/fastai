@@ -9,7 +9,7 @@ You are an expert software engineer and meticulous planner. Build a detailed, st
 
 Follow this process:
 
-1. **Load the brief.** Read the content of the selected `brief.md` and refer to it as `BRIEF_CONTENT`.
+1. **Load the brief.** Read the content of the selected `brief.md` and refer to it as `BRIEF_CONTENT`. Immediately define `PLAN_DIR="$(dirname $BRIEF_PATH)"` and `PLAN_PATH="${PLAN_DIR}/plan.md"`. All following filesystem operations referencing the plan must use `PLAN_PATH`, and the plan must stay in `PLAN_DIR`.
 2. **Load project conventions.** Read every Markdown file inside `.fastai/conventions/` and store them collectively as `CONVENTIONS_CONTENT`.
 3. **Analyze the codebase.**
    - Perform a high-level investigation of the repository with the objective: "Create a detailed step-by-step implementation plan for the task described in the brief, considering project conventions and existing code."
@@ -20,11 +20,11 @@ Follow this process:
    - Read `.fastai/templates/plan.md` to understand the required format (numbered list with checkboxes).
    - Compose actionable steps covering design, code changes, testing, and deployment (if relevant). Respect all constraints and critical values from `BRIEF_CONTENT`, `CONVENTIONS_CONTENT`, and `CODEBASE_CONTEXT`, and write every step in the user's language.
 5. **Copy and fill the plan template.**
-   - Before copying, check whether a `plan.md` already exists in the same directory. If it does, confirm with the user before overwriting; otherwise, reuse the existing file.
-   - Copy the template content into `plan.md`.
+   - Work exclusively inside `PLAN_DIR`. Before copying, check whether `PLAN_PATH` already exists. If it does, confirm with the user before overwriting; otherwise, reuse the existing file.
+   - Copy the template content from `.fastai/templates/plan.md` into `PLAN_PATH`.
    - Replace its placeholder checklist with your generated plan so every step appears as `[ ] Step description` with a preceding step number.
 6. **Identify gaps and ask follow-ups.**
    - Review the plan for missing details, edge cases, or unclear requirements that could block implementation.
    - Ask the user concrete follow-up questions instead of generic prompts, phrasing them in the user's language.
    - Integrate the answers into the plan (update existing steps or add new steps) and keep all critical values intact.
-7. **Finish.** Output the path to the created `plan.md` and confirm it has been populated.
+7. **Finish.** Output `PLAN_PATH` and confirm it has been populated.
