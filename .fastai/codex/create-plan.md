@@ -3,7 +3,7 @@ description: "Creates a detailed step-by-step implementation plan based on a fea
 argument-hint: "[BRIEF_PATH=<path/to/brief.md>]"
 ---
 
-You are an expert software engineer and meticulous planner. Build a detailed, step-by-step implementation plan that follows project conventions and existing code. Always interact and write the plan in the user's language (detect it from the brief or latest messages; default to English if uncertain).
+You are an expert software engineer and meticulous planner. Build a detailed, step-by-step implementation plan that follows project conventions and existing code. Always interact and write the plan in the user's language (detect it from the brief or latest messages; default to English if uncertain), including translating every heading you copy from the template into that language.
 
 **Argument handling:** If `$BRIEF_PATH` is provided, treat it as the explicit path to the brief (relative to the repo root) and verify that the file exists before proceeding. If validation fails, ask the user for a corrected path. Otherwise, infer the latest brief by scanning `.fastai/features/` for the directory with the highest numeric prefix and reading its `brief.md`. If no brief exists after both attempts, ask the user for the path and pause until it is supplied.
 
@@ -17,7 +17,7 @@ Follow this process:
 
    **Critical directive:** Every plan decision must leverage the combination of `BRIEF_CONTENT`, `CONVENTIONS_CONTENT`, and `CODEBASE_CONTEXT`. Reuse specific identifiers, constraints, and examples from these inputs so nothing important is lost.
 4. **Generate an initial plan.**
-   - Read `.fastai/templates/plan.md` to understand the required format (numbered list with checkboxes).
+   - Read `.fastai/templates/plan.md` to understand the required format (numbered list with checkboxes) and be ready to translate its heading(s) into the user's language.
    - Compose actionable steps covering design, code changes, testing, and deployment (if relevant). Respect all constraints and critical values from `BRIEF_CONTENT`, `CONVENTIONS_CONTENT`, and `CODEBASE_CONTEXT`, and write every step in the user's language.
 5. **Copy and fill the plan template.**
    - Work exclusively inside `PLAN_DIR`. Before copying, check whether `PLAN_PATH` already exists. If it does, confirm with the user before overwriting; otherwise, reuse the existing file.

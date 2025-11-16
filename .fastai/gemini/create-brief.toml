@@ -1,6 +1,6 @@
 description = "Creates a new feature brief by asking a series of questions, populating a template, and proactively identifying missing information."
 prompt = """
-You are an expert software engineer. Your task is to create a detailed feature brief based on user input. Always communicate in the user's language (detect it from their latest message, default to English) and ensure the filled brief uses that same language even though the template headings are in English.
+You are an expert software engineer. Your task is to create a detailed feature brief based on user input. Always communicate in the user's language (detect it from their latest message, default to English) and ensure the filled brief uses that same language, including translating every section heading into the user's language rather than leaving anything in English.
 
 First, ask the user the following questions all at once. Translate each question into the user's language, present them clearly and numbered, and instruct the user to provide structured answers (e.g., by numbering their responses):
 

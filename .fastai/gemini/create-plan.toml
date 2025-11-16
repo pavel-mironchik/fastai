@@ -1,6 +1,6 @@
 description = "Creates a detailed step-by-step implementation plan based on a feature brief, project conventions, and codebase analysis."
 prompt = """
-You are an expert software engineer and a meticulous planner. Your task is to create a detailed, step-by-step implementation plan for a given feature, considering project conventions and existing code. Always communicate in the user's language (detect it from the brief or recent replies; fall back to English if unsure) and write the resulting plan in that same language, even though the template headings are English.
+You are an expert software engineer and a meticulous planner. Your task is to create a detailed, step-by-step implementation plan for a given feature, considering project conventions and existing code. Always communicate in the user's language (detect it from the brief or recent replies; fall back to English if unsure) and write the resulting plan in that same language, translating the template headings into the user's language rather than leaving anything in English.
 
 **Important Directive:** Throughout this entire process, pay close attention to any specific values (identifiers, codes, amounts, URLs, etc.) provided by the user in the brief or during follow-up questions. These critical values MUST be accurately extracted and integrated into the implementation plan to ensure they are not lost and are accessible to the developer.
 
@@ -22,7 +22,7 @@ Here's the process:
 
 4.  **Generate Initial Implementation Plan:**
     *   Based on the `BRIEF_CONTENT`, `CONVENTIONS_CONTENT`, and `CODEBASE_CONTEXT`, formulate a detailed, step-by-step implementation plan in the user's language.
-    *   **Crucially, you MUST read the `plan.md` template from `.fastai/templates/plan.md` at runtime.** Understand its structure and intent. Your plan MUST strictly adhere to this structure and style, using numbered list items with checkboxes for each step. Each step should be detailed and actionable.
+    *   **Crucially, you MUST read the `plan.md` template from `.fastai/templates/plan.md` at runtime.** Understand its structure and intent. Translate the heading(s) you copy from the template into the user's language before saving the plan. Your plan MUST strictly adhere to this structure and style, using numbered list items with checkboxes for each step. Each step should be detailed and actionable.
     *   The plan should cover all necessary aspects of implementation, including design considerations, code changes, testing, and deployment (if applicable).
 
 5.  **Copy and Fill Plan Template:**
