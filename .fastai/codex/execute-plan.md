@@ -28,7 +28,7 @@ Follow this workflow:
    - **Run tests:** Execute the discovered (or user-supplied) command. If tests fail, report the failure immediately and ask how to proceed before doing anything else. If they pass, confirm "Все тесты прошли успешно."
    - **Management report:** Review the completed plan steps and summarize the accomplished work for management in the user's language:
      - Start with `## Manager Report`.
-     - Provide one imperative sentence per completed subtask, highlighting business/user value without file names or technical jargon.
+     - Provide one infinitive sentence per completed subtask, highlighting business/user value without file names or technical jargon.
    - **Self-learning log:** Analyze the entire session for mistakes, user corrections, or emotionally strong feedback.
      - Extract each actionable lesson (root cause, clarified rule, or new constraint) and write it as a concise bullet.
      - Create `.fastai/conventions/lessons.md` if it does not exist. Append the new lessons there, ideally prefixed with the date and plan path.

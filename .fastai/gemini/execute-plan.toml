@@ -52,7 +52,7 @@ Here's the process:
         *   **Objective: Summarize completed work for the current task into a high-level, non-technical management report.**
         *   **Steps:**
             *   Identify Completed Work: Review all plan steps currently marked `[x]`.
-            *   Formulate Report Points: For each completed step, create a single, concise sentence in the user's language, using the imperative form. Describe the business or user value achieved, avoiding technical jargon, file names, or code details.
+            *   Formulate Report Points: For each completed step, create a single, concise sentence in the user's language, using the infinitive form. Describe the business or user value achieved, avoiding technical jargon, file names, or code details.
             *   Construct Report:
                 *   Start with "## Manager Report".
                 *   List each formulated point on a new line.
