@@ -32,7 +32,8 @@ Follow this workflow:
      - Append this report to the bottom of the same `plan.md`.
    - **Self-learning log:** Analyze the entire session for mistakes, user corrections, or emotionally strong feedback.
      - Extract each actionable lesson (root cause, clarified rule, or new constraint) and write it as a concise bullet.
-     - Create `.fastai/conventions/lessons.md` if it does not exist. Append the new lessons there, ideally prefixed with the date and plan path.
-     - Only add genuinely new guidance; if an identical lesson already exists, leave a brief note confirming it remains valid instead of duplicating it.
+     - Summarize the proposed lessons to the user in the chat and confirm they look correct.
+     - Ask explicitly whether to append them to `.fastai/conventions/lessons.md`; wait for the user's approval (and incorporate any requested edits) before writing anything.
+     - Create `.fastai/conventions/lessons.md` if it does not exist. When approved, append the new lessons there, ideally prefixed with the date and plan path, and avoid duplicating existing guidance (leave a brief “still valid” note instead of repeats).
 
 4. **Finish.** Output the path to the updated `plan.md` and confirm that execution, testing, and reporting are complete.
