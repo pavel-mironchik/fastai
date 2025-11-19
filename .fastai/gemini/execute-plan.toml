@@ -39,14 +39,14 @@ Here's the process:
     *   **Run Tests:**
         *   **Discover Test Command:**
             *   Attempt to find the project's test command by analyzing common files like `package.json` (for `test` scripts), `Makefile`, `README.md`, or common test runner configuration files (e.g., `pytest.ini`, `jest.config.js`).
-            *   If a test command cannot be reliably discovered, you MUST ask the user: "Не удалось автоматически определить команду для запуска тестов. Пожалуйста, укажите команду для запуска тестов, покрывающих измененные файлы."
+            *   If a test command cannot be reliably discovered, you MUST ask the user: "I was unable to automatically determine the command for running tests. Please provide the command starting test that cover the modified files."
         *   **Execute Tests:**
             *   Run the discovered (or user-provided) test command.
             *   **Crucial Error Handling:** If tests fail, you MUST immediately:
                 *   Report the failure to the user, explaining the error.
                 *   Ask the user for guidance (e.g., "Should I attempt to fix the failing tests?", "Should I revert changes?", "What should be done next?").
                 *   **Do NOT proceed to the management report until the user provides instructions.**
-            *   If tests pass, confirm to the user: "Все тесты прошли успешно."
+            *   If tests pass, confirm to the user: "All tests passed successfully."
 
     *   **Generate Management Report:**
         *   **Objective: Summarize completed work for the current task into a high-level, non-technical management report.**

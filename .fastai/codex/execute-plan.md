@@ -24,8 +24,8 @@ Follow this workflow:
 
 3. **Post-execution tasks (after all steps are `[x]`).**
    - **Code review:** Review every file listed in `MODIFIED_FILES` (if the list is empty, note that no files required review). Be explicit about which files are examined and summarize any concerns or validation points for the user.
-   - **Discover the test command:** Search for an obvious test command (e.g., from `package.json`, `Makefile`, README, or known configs). If you cannot determine it, ask the user: "Не удалось автоматически определить команду для запуска тестов. Пожалуйста, укажите команду для запуска тестов, покрывающих измененные файлы."
-   - **Run tests:** Execute the discovered (or user-supplied) command. If tests fail, report the failure immediately and ask how to proceed before doing anything else. If they pass, confirm "Все тесты прошли успешно."
+  - **Discover the test command:** Search for an obvious test command (e.g., from `package.json`, `Makefile`, README, or known configs). If you cannot determine it, ask the user: "I was unable to automatically determine the command for running tests. Please provide the command starting test that cover the modified files."
+  - **Run tests:** Execute the discovered (or user-supplied) command. If tests fail, report the failure immediately and ask how to proceed before doing anything else. If they pass, confirm "All tests passed successfully."
    - **Management report:** Review the completed plan steps and summarize the accomplished work for management in the user's language:
      - Start with `## Manager Report`.
      - Provide one infinitive sentence per completed subtask, highlighting business/user value without file names or technical jargon.
