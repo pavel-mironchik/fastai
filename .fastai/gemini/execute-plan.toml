@@ -31,11 +31,6 @@ Here's the process:
 
 4.  **Post-Execution Tasks (after all steps are marked `[x]` and saved):**
 
-    *   **Code Review of Modified Files:**
-        *   If `MODIFIED_FILES` is empty, explicitly state that no files required review. Otherwise, use `codebase_investigator` with the objective: "Perform a thorough code review of the following files for quality, adherence to conventions, and potential bugs: [list of `MODIFIED_FILES`]. Consider the project conventions provided in `CONVENTIONS_CONTENT`."
-        *   Supplement this with direct reading and analysis of `MODIFIED_FILES` if deemed necessary for a comprehensive review.
-        *   Report the findings of the code review (or the fact that no review was needed) to the user.
-
     *   **Run Tests:**
         *   **Discover Test Command:**
             *   Attempt to find the project's test command by analyzing common files like `package.json` (for `test` scripts), `Makefile`, `README.md`, or common test runner configuration files (e.g., `pytest.ini`, `jest.config.js`).
@@ -47,6 +42,17 @@ Here's the process:
                 *   Ask the user for guidance (e.g., "Should I attempt to fix the failing tests?", "Should I revert changes?", "What should be done next?").
                 *   **Do NOT proceed to the management report until the user provides instructions.**
             *   If tests pass, confirm to the user: "All tests passed successfully."
+
+    *   **Code Review of Modified Files:**
+        *   If `MODIFIED_FILES` is empty, explicitly state that no files required review. Otherwise, use `codebase_investigator` with the objective: "Perform a thorough code review of the following files for quality, adherence to conventions, and potential bugs: [list of `MODIFIED_FILES`]. Consider the project conventions provided in `CONVENTIONS_CONTENT`."
+        *   Supplement this with direct reading and analysis of `MODIFIED_FILES` if deemed necessary for a comprehensive review.
+        *   Report the findings of the code review (or the fact that no review was needed) to the user.
+
+    *   **Document Created & Modified Files in the Plan:**
+        *   Locate the `## Created & Modified Files` section.
+        *   Translate that heading into the user's language if it is still in English.
+        *   Replace the section content with a bullet list of unique file paths from `MODIFIED_FILES` (covering every created or updated file), expressed relative to the repo root.
+        *   If `MODIFIED_FILES` is empty, write a single bullet whose text is the translation of "no changes" into the user's language.
 
     *   **Generate Management Report:**
         *   **Objective: Summarize completed work for the current task into a high-level, non-technical management report.**

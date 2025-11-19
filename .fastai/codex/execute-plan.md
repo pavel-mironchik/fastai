@@ -23,12 +23,13 @@ Follow this workflow:
      - When the step succeeds, update the plan text by changing that step's checkbox to `[x]`, append any helpful notes if needed, and save the updated `plan.md`.
 
 3. **Post-execution tasks (after all steps are `[x]`).**
+   - **Run tests:** Execute the discovered (or user-supplied) command. If tests fail, report the failure immediately and ask how to proceed before doing anything else. If they pass, confirm "All tests passed successfully."
    - **Code review:** Review every file listed in `MODIFIED_FILES` (if the list is empty, note that no files required review). Be explicit about which files are examined and summarize any concerns or validation points for the user.
-  - **Discover the test command:** Search for an obvious test command (e.g., from `package.json`, `Makefile`, README, or known configs). If you cannot determine it, ask the user: "I was unable to automatically determine the command for running tests. Please provide the command starting test that cover the modified files."
-  - **Run tests:** Execute the discovered (or user-supplied) command. If tests fail, report the failure immediately and ask how to proceed before doing anything else. If they pass, confirm "All tests passed successfully."
-  - **Management report:** Review the completed plan steps and summarize the accomplished work for management in the user's language:
-    - Use the pre-existing `Manager Report` section at the end of `plan.md`. If its heading is still in English, translate it to the user's language before writing the report.
-    - Provide one sentence per completed subtask, highlighting business/user value without file names or technical jargon. Each sentence must start with a verb in the infinitive form (e.g., "to add", "to translate", "to rebuild").
+   - **Document created & modified files inside the plan:** Find the `## Created & Modified Files` section, translate its heading into the user's language if it is still in English, and then replace the content with a bullet list of unique file paths from `MODIFIED_FILES` (every file created or changed), relative to the repo root. If `MODIFIED_FILES` is empty, write a single bullet whose text is the translation of "no changes" into the user's language.
+   - **Discover the test command:** Search for an obvious test command (e.g., from `package.json`, `Makefile`, README, or known configs). If you cannot determine it, ask the user: "I was unable to automatically determine the command for running tests. Please provide the command starting test that cover the modified files."
+   - **Management report:** Review the completed plan steps and summarize the accomplished work for management in the user's language:
+     - Use the pre-existing `Manager Report` section at the end of `plan.md`. If its heading is still in English, translate it to the user's language before writing the report.
+     - Provide one sentence per completed subtask, highlighting business/user value without file names or technical jargon. Each sentence must start with a verb in the infinitive form (e.g., "to add", "to translate", "to rebuild").
    - **Self-learning log:** Analyze the entire session for mistakes, user corrections, or emotionally strong feedback.
      - Extract each actionable lesson (root cause, clarified rule, or new constraint) and write it as a concise bullet.
      - Summarize the proposed lessons to the user in the chat and confirm they look correct.
