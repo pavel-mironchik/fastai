@@ -34,6 +34,7 @@ Here's the process:
 ```
 
     *   Replace the placeholder steps in `PLAN_PATH` with your generated initial plan.
+    *   Leave the sections that map to `## Created & Modified Files` and `## Manager Report` (after translation) untouched — the template placeholders are meant to be filled only after the plan has been executed.
 
 6.  **Proactively Identify and Ask for Missing Information for the Plan:**
     *   **Analyze the *initial generated plan*.** Based on the plan, the `BRIEF_CONTENT`, `CONVENTIONS_CONTENT`, and `CODEBASE_CONTEXT`, identify any specific details, constraints, technical requirements, edge cases, or other information that is *missing* or unclear but would be crucial for a successful and robust implementation by a developer.

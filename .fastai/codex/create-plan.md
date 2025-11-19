@@ -23,6 +23,7 @@ Follow this process:
    - Work exclusively inside `PLAN_DIR`. Before copying, check whether `PLAN_PATH` already exists. If it does, confirm with the user before overwriting; otherwise, reuse the existing file.
    - Copy the template content from `.fastai/templates/plan.md` into `PLAN_PATH`.
    - Replace its placeholder checklist with your generated plan so every step appears as `[ ] Step description` with a preceding step number.
+   - Leave the sections corresponding to `## Created & Modified Files` and `## Manager Report` (translated into the user's language) untouched; they must stay as placeholders until the plan has actually been executed.
 6. **Identify gaps and ask follow-ups.**
    - Review the plan for missing details, edge cases, or unclear requirements that could block implementation.
    - Ask the user concrete follow-up questions instead of generic prompts, phrasing them in the user's language.
