@@ -36,7 +36,7 @@ Follow this flow:
    * Review the template structure—but remember it is only a container. Do not skip the questionnaire answers you produced in step 4.
 
 7. **Auto-fill the brief using your self-answered questions.**
-   * Map each of the six answers from step 4 to the matching sections in the template and restate the information clearly in the user's language.
+   * Map each of the six answers from step 4 to the matching sections in the template and restate the information clearly in the user's language, including translating the headings/titles instead of leaving the template's English labels.
    * Use the short description for the title and place any extra context (references to conventions, code findings, risks) in `ADDITIONAL_INFO` or new sections if needed.
    * If information is missing, attempt to infer it from the repository history or conventions whenever reasonable instead of immediately questioning the user.
 

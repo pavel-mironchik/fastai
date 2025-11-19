@@ -36,7 +36,7 @@ You are an expert software engineer running the **lazy-mode** brief workflow. Th
    - Copy `.fastai/templates/brief.md` into the new directory as `brief.md` and inspect its sections, remembering that the template is just a container for the answers you already produced.
 
 7. **Auto-fill every section using your self-answered questions.**
-   - Map each of the six answers into the corresponding template sections, restating them in the user's language.
+   - Map each of the six answers into the corresponding template sections, restating them in the user's language and translating every heading/title instead of leaving the template's English labels.
    - Use the derived short description for the title and fill `ADDITIONAL_INFO` (or add new sections) with any extra insights from conventions, code review, or assumptions.
    - If information is missing, infer it from existing briefs, plans, or repository context whenever reasonable instead of defaulting to more questions.
 
