@@ -160,7 +160,7 @@ Running each step in a **fresh CLI session** keeps context short and results cri
 #### Optional Step — `/fastai-preview-plan`
 
 - This step is optional—skip it for small or straightforward tasks. Use it only when the plan feels complex enough to justify the extra check.
-- Run the command before execution when you want a dry run. It loads the same `plan.md`, all conventions, and `lessons.md`, then analyzes every step without touching the working tree.
+- Run the command before the plan execution when you want a dry run. It loads the same `plan.md`, all conventions, and `lessons.md`, then analyzes every step without touching the working tree.
 - Output highlights pending steps, risks, dependencies, open questions, and suggested pre-checks/tests so you can fix issues before editing code.
 - In practice, it turns potential surprises into known action items: you see narrow spots upfront, know what to ask the user, and line up the tests you’ll need. That saves time versus re-running `/fastai-execute-plan` after mistakes.
 - **Gemini CLI invocation:** `/fastai-preview-plan [.fastai/features/005_payments/plan.md]` (plain path argument is optional; omit it to preview the latest plan).
@@ -170,7 +170,7 @@ Running each step in a **fresh CLI session** keeps context short and results cri
 
 - The agent opens `plan.md`, skips any steps already marked `[x]`, and executes each remaining `[ ]` item in order.
 - After completing a step it toggles the checkbox, saves `plan.md`, and tracks modified files.
-- When all steps are done it reviews the changed files, discovers and runs the appropriate test command, and appends a management-ready section titled `## Manager Report` summarizing the business impact.
+- When all steps are done it discovers and runs the appropriate test command, reviews every touched path, records those files inside the plan's `## Created & Modified Files` section, and appends a management-ready section titled `## Manager Report` summarizing the business impact.
 - **Gemini CLI invocation:** `/fastai-execute-plan .fastai/features/005_payments/plan.md` (plain path argument). You can also run `/fastai-execute-plan` without arguments; it will open the most recent plan or ask you for one if none exist.
 - **GPT Codex invocation:** `/fastai-execute-plan PLAN_PATH=.fastai/features/005_payments/plan.md`. As with Gemini, omitting the argument makes the command search for the latest plan and prompt you only when it can’t find one.
 
