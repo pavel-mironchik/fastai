@@ -18,7 +18,7 @@ Here's the process:
 3.  **Execute Plan Steps Sequentially:**
     *   Parse `PLAN_CONTENT` to identify individual steps, looking for lines starting with a number and `[ ]`.
     *   Skip any steps already marked `[x]` so rerunning the command does not repeat completed work.
-    *   Initialize an empty list called `MODIFIED_FILES` to track all files created or changed during execution.
+    *   Initialize an empty list called `MODIFIED_FILES` to track all files created or changed during execution. Treat the `.fastai/` directory as internal agent data: even if those files are touched while following the plan, never add their paths to `MODIFIED_FILES`.
     *   For each identified step:
         *   **Execute the action described in the step.** Use appropriate tools (`run_shell_command`, `write_file`, `replace`, `read_file`, `glob`, `search_file_content`, etc.) as needed.
         *   **Crucial Error Handling:** If any tool execution fails (e.g., `run_shell_command` returns a non-zero exit code, a file operation fails), you MUST immediately:
@@ -51,8 +51,8 @@ Here's the process:
     *   **Document Created & Modified Files in the Plan:**
         *   Locate the `## Created & Modified Files` section.
         *   Translate that heading into the user's language if it is still in English.
-        *   Replace the section content with a bullet list of unique file paths from `MODIFIED_FILES` (covering every created or updated file), expressed relative to the repo root.
-        *   If `MODIFIED_FILES` is empty, write a single bullet whose text is the translation of "no changes" into the user's language.
+        *   Replace the section content with a bullet list of unique file paths from `MODIFIED_FILES` (covering every tracked project file created or updated), expressed relative to the repo root.
+        *   If `MODIFIED_FILES` is empty, write a single bullet whose text is the translation of "no changes to project files" into the user's language.
 
     *   **Generate Management Report:**
         *   **Objective: Summarize completed work for the current task into a high-level, non-technical management report.**
