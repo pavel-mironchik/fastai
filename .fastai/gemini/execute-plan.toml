@@ -52,11 +52,10 @@ Here's the process:
         *   **Objective: Summarize completed work for the current task into a high-level, non-technical management report.**
         *   **Steps:**
             *   Identify Completed Work: Review all plan steps currently marked `[x]`.
-            *   Formulate Report Points: For each completed step, create a single, concise sentence in the user's language, using the infinitive form. Describe the business or user value achieved, avoiding technical jargon, file names, or code details.
-            *   Construct Report:
-                *   Start with "## Manager Report".
+            *   Formulate Report Points: For each completed step, create a single, concise sentence in the user's language. Each sentence must start with an infinitive verb (e.g., "to add", "to translate", "to rebuild"). Describe the business or user value achieved, avoiding technical jargon, file names, or code details.
+            *   Construct Report Within Existing Section:
+                *   Locate the `Manager Report` section already present at the end of `plan.md`. Translate the heading into the user's language now if it somehow remains in English.
                 *   List each formulated point on a new line.
-            *   Append to Plan: Append the constructed report to the `plan.md` file located at `.fastai/features/{current_task_id}/plan.md`.
     *   **Self-Learning Log:**
         *   Review the entire session (user instructions, corrections, emotional feedback) and identify mistakes or new constraints that surfaced.
         *   Convert each insight into a concise bullet that captures the rule, why it matters, and how to avoid the issue.
