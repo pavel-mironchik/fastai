@@ -44,7 +44,7 @@ Run the commands below yourself (they only touch your home directory) or hand th
 
 #### 1.1 Gemini CLI commands
 
-Copy everything from `.fastai/gemini/` into your local Gemini commands folder so they show up as `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
+Copy everything from `.fastai/gemini/` into your local Gemini commands folder so they show up as `/fastai-create-brief`, the optional bonus `/fastai-create-brief-lazy`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
 
 ```bash
 mkdir -p ~/.gemini/commands/fastai
@@ -61,11 +61,12 @@ cp .fastai/gemini/*.toml ~/.gemini/commands/fastai/
 
 #### 1.2 GPT Codex prompts
 
-Codex CLI looks for Markdown prompts directly under `~/.codex/prompts`. Copy the files from `.fastai/codex/` into that directory and add the `fastai-` prefix so they become `/fastai-create-brief`, `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
+Codex CLI looks for Markdown prompts directly under `~/.codex/prompts`. Copy the files from `.fastai/codex/` into that directory and add the `fastai-` prefix so they become `/fastai-create-brief`, `/fastai-create-brief-lazy` (bonus lazy-mode), `/fastai-create-plan`, `/fastai-preview-plan`, and `/fastai-execute-plan`.
 
 ```bash
 mkdir -p ~/.codex/prompts
 cp .fastai/codex/create-brief.md ~/.codex/prompts/fastai-create-brief.md
+cp .fastai/codex/create-brief-lazy.md ~/.codex/prompts/fastai-create-brief-lazy.md
 cp .fastai/codex/create-plan.md ~/.codex/prompts/fastai-create-plan.md
 cp .fastai/codex/preview-plan.md ~/.codex/prompts/fastai-preview-plan.md
 cp .fastai/codex/execute-plan.md ~/.codex/prompts/fastai-execute-plan.md
@@ -75,6 +76,7 @@ cp .fastai/codex/execute-plan.md ~/.codex/prompts/fastai-execute-plan.md
 >
 > ```bash
 > ln -s "$PWD/.fastai/codex/create-brief.md" ~/.codex/prompts/fastai-create-brief.md
+> ln -s "$PWD/.fastai/codex/create-brief-lazy.md" ~/.codex/prompts/fastai-create-brief-lazy.md
 > ln -s "$PWD/.fastai/codex/create-plan.md" ~/.codex/prompts/fastai-create-plan.md
 > ln -s "$PWD/.fastai/codex/preview-plan.md" ~/.codex/prompts/fastai-preview-plan.md
 > ln -s "$PWD/.fastai/codex/execute-plan.md" ~/.codex/prompts/fastai-execute-plan.md
@@ -148,6 +150,15 @@ Running each step in a **fresh CLI session** keeps context short and results cri
 - The command double-checks for missing details and asks follow-ups before confirming the brief path.
 - You never need to pass arguments to this command; it always creates the next feature directory automatically.
 
+#### Bonus lazy-mode — `/fastai-create-brief-lazy`
+
+- Optional cherry on top for the “lazy” days once you’ve solved roughly a dozen tasks (or earlier if the new request is similar to recent ones) and already have briefs/plans to learn from.
+- Instead of interviewing you, the agent reads the newest `.fastai/features/*/brief.md` and `plan.md` files plus the relevant code, then answers the six template sections itself so you only provide a short description.
+- It still follows the exact six-question interview from `/fastai-create-brief`, just answering each question on your behalf before it ever looks at the template, so the resulting brief stays consistent with the standard flow.
+- Clarifying questions are allowed only after the agent has studied the repository and past docs, which prevents the obvious “what file is this?” kind of questions and saves even more time.
+- Kick it off by appending a 2–3 sentence summary inline (`/fastai-create-brief-lazy Add invoice export to XLSX`) or, on Codex, with `SUMMARY="..."`. Skip it and the agent will simply ask for that short summary before studying the codebase.
+- When the draft brief is ready it shows you the path, highlights the assumptions it made, and politely asks you to review and adjust before moving on.
+
 ### Step 2 — `/fastai-create-plan` (new session recommended)
 
 - The agent loads the latest brief (or a path you provide), reads `.fastai/conventions/*.md`, inspects any referenced code files, and writes an actionable, checkbox-style plan into `plan.md`.
@@ -197,6 +208,7 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 ## Tips & Gotchas
 
 - **Restart after installation.** Both CLIs read custom commands only when they start.
+- **Lazy-mode needs history.** `/fastai-create-brief-lazy` is a friendly bonus for “lazy” moments — use it only once you have roughly a dozen briefs/plans (or clearly repetitive work) so it has enough material to study before it starts answering the template on your behalf.
 - **Make sure the repo is writable.** Commands create directories beneath `.fastai/features/`. If permissions are read-only, they will fail immediately.
 - **Structured answers matter.** The brief command expects numbered replies; unstructured text makes the template harder to fill accurately.
 - **Confirm before overwriting.** If you rerun `/fastai-create-plan`, decide whether to reuse the existing `plan.md` or replace it. The command will prompt, but double-check to avoid losing work.
@@ -211,6 +223,7 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 **Gemini CLI**
 
 - `/fastai-create-brief` — no arguments needed.
+- `/fastai-create-brief-lazy [short summary]` — optional lazy-mode; add the 2–3 sentence summary right after the command (e.g., `/fastai-create-brief-lazy Add XLSX export...`) or leave it blank and the agent will ask for it before diving into research.
 - `/fastai-create-plan [optional_path_to_brief.md]` — pass just the brief path if you want a specific feature; otherwise omit it and the command finds the latest brief or asks for one.
 - `/fastai-preview-plan [optional_path_to_plan.md]` — review steps, risks, and test expectations without modifying files.
 - `/fastai-execute-plan [optional_path_to_plan.md]` — same pattern: provide a path if you want to override the auto-detected latest plan.
@@ -218,6 +231,7 @@ This rhythm minimizes token usage, creates natural checkpoints for code review, 
 **GPT Codex**
 
 - `/fastai-create-brief` — no arguments needed.
+- `/fastai-create-brief-lazy [optional SUMMARY="short description"]` — same lazy-mode bonus; pass `SUMMARY="Add XLSX export..."` to skip the prompt or leave it blank and the agent will ask for your two-sentence summary before researching.
 - `/fastai-create-plan [optional BRIEF_PATH=...]` — e.g., `/fastai-create-plan BRIEF_PATH=.fastai/features/005_payments/brief.md`. Without the argument, Codex locates the latest brief and prompts you only if it can’t find one.
 - `/fastai-preview-plan [optional PLAN_PATH=...]` — e.g., `/fastai-preview-plan PLAN_PATH=.fastai/features/005_payments/plan.md`. Skipping the argument previews the latest plan automatically.
 - `/fastai-execute-plan [optional PLAN_PATH=...]` — e.g., `/fastai-execute-plan PLAN_PATH=.fastai/features/005_payments/plan.md`. As above, omitting `PLAN_PATH` lets Codex auto-discover the current plan.

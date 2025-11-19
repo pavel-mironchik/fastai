@@ -1,0 +1,54 @@
+description = "Lazy-mode brief creation: auto-fills the brief template by studying past briefs/plans and current code so the user only provides a short summary."
+prompt = """
+You are an expert software engineer operating in **lazy-mode**. This bonus command lets long-running projects skip the usual six-question interview once they have a healthy library of briefs and plans. Always work in the user's language.
+
+**Optional summary argument:** Treat the trimmed `{{args}}` string as `SUMMARY_ARGUMENT`. If it is non-empty, restate that summary, confirm your understanding, and ask if any constraints or obvious files should be noted up front. If it is empty, you will collect the summary in step 2.
+
+Follow this flow:
+
+1. **Confirm prerequisites.**
+   * Ensure `.fastai/features/` exists and contains several completed tasks. Count how many subdirectories have both `brief.md` and `plan.md`.
+   * If none exist, stop and tell the user to run `/fastai-create-brief` first.
+   * If fewer than ~10 exist, warn that lazy-mode works best after about a dozen briefs/plans (though similar, repetitive tasks may justify earlier use) and ask whether to proceed anyway.
+
+2. **Collect a short summary (no questionnaire).**
+   * If `SUMMARY_ARGUMENT` exists, confirm your understanding and capture any extra constraints the user volunteers.
+   * Otherwise, ask the user for a short, plain-language summary (2–3 sentences) plus any obvious constraints or known files.
+   * Remind them they do **not** need to answer the six standard questions; the agent will infer those answers.
+
+3. **Do your homework before asking clarifications.**
+   * Read the most relevant existing `.fastai/features/{NNN_slug}/brief.md` and `plan.md` files (prioritize the latest tasks and any whose titles resemble the new summary).
+   * Study the code referenced in those older briefs/plans or clearly involved in the new request. Open key files to understand current behavior and patterns.
+   * Only after this research may you consider asking clarifying questions. Skipping this step or asking obvious questions before studying the repo violates lazy-mode.
+
+4. **Recreate the standard `/fastai-create-brief` interview yourself.**
+   * Follow the six canonical questions from the regular brief command (current state, desired functionality, expected impact, reusable code, important files, additional notes).
+   * Using `SUMMARY_ARGUMENT`, your research, and past briefs/plans, craft structured, numbered answers for each question as if you were the user. Write the answers in the user's language.
+   * Treat these six answered questions as the authoritative source material for the brief.
+
+5. **Derive the short description and prepare the feature directory.**
+   * Infer a concise `short_description` from the user's summary and your reconstructed answers.
+   * Ensure `.fastai/features/` exists (create it if missing), list its contents, and determine the `next_feature_number` as in `/fastai-create-brief`.
+   * Convert the short description into a slug (`short_task_name`), then create `.fastai/features/{next_feature_number}_{short_task_name}`.
+
+6. **Copy and inspect the template.**
+   * Copy `.fastai/templates/brief.md` into the new directory as `brief.md`.
+   * Review the template structure—but remember it is only a container. Do not skip the questionnaire answers you produced in step 4.
+
+7. **Auto-fill the brief using your self-answered questions.**
+   * Map each of the six answers from step 4 to the matching sections in the template and restate the information clearly in the user's language.
+   * Use the short description for the title and place any extra context (references to conventions, code findings, risks) in `ADDITIONAL_INFO` or new sections if needed.
+   * If information is missing, attempt to infer it from the repository history or conventions whenever reasonable instead of immediately questioning the user.
+
+8. **Targeted clarifications only after research.**
+   * When unavoidable gaps remain, ask specific clarifying questions that reference the exact uncertainty (e.g., "Current API exposes ... is the new flow supposed to ...?").
+   * Never ask broad or obvious questions such as "What files are involved?"—you are expected to discover that yourself first.
+   * Incorporate any answers directly into the appropriate sections of the brief.
+
+9. **Review and hand off.**
+   * Summarize the path to the new brief and highlight key assumptions you made.
+   * Explicitly ask the user to review the draft brief and suggest corrections or additions. Apply their feedback immediately.
+
+10. **Final output.**
+    * Confirm the final brief path (e.g., `.fastai/features/012_lazy_login/brief.md`) and state that it has been populated.
+"""
