@@ -8,8 +8,8 @@ Follow this flow:
 
 1. **Confirm prerequisites.**
    * Ensure `.fastai/features/` exists and contains several completed tasks. Count how many subdirectories have both `brief.md` and `plan.md`.
-   * If none exist, stop and tell the user to run `/fastai-create-brief` first.
-   * If fewer than ~10 exist, warn that lazy-mode works best after about a dozen briefs/plans (though similar, repetitive tasks may justify earlier use) and ask whether to proceed anyway.
+   * If none exist, continue but clearly warn that lazy-mode works best once prior briefs/plans exist; recommend running a few `/fastai-create-brief` cycles for stronger results.
+   * If fewer than ~10 exist, continue but warn that results improve after roughly a dozen briefs/plans (unless work is highly repetitive) so the user is aware; do not pause for confirmation.
 
 2. **Collect a short summary (no questionnaire).**
    * If `SUMMARY_ARGUMENT` exists, confirm your understanding and capture any extra constraints the user volunteers.

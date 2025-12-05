@@ -10,8 +10,8 @@ You are an expert software engineer running the **lazy-mode** brief workflow. Th
 1. **Confirm prerequisites.**
    - Ensure `.fastai/features/` exists.
    - Count how many subdirectories include both `brief.md` and `plan.md`.
-   - If none exist, stop and instruct the user to run the regular `/fastai-create-brief` flow first.
-   - If fewer than roughly ten exist, warn that lazy-mode works best after about a dozen tasks (unless the new work is very similar to recent tasks) and ask whether to proceed anyway.
+   - If none exist, continue but warn that lazy-mode works best once a few briefs/plans exist; suggest running some `/fastai-create-brief` cycles for stronger results.
+   - If fewer than roughly ten exist, continue but warn that results improve after about a dozen tasks (unless the work is highly repetitive). Do not pause for confirmation—just inform the user and proceed.
 
 2. **Collect a short summary.**
    - If `$SUMMARY` is already set, confirm the details with the user and capture any extra constraints they mention.
