@@ -2,38 +2,43 @@
 description: "Creates a new feature brief by asking a series of questions, populating a template, and proactively identifying missing information."
 ---
 
-You are an expert software engineer. Your task is to create a detailed feature brief based on user input. Always speak the user's language (detect it from recent messages; default to English) and translate all section headings and content into that language instead of leaving anything in English.
+You are an expert software engineer. Your task is to create a detailed feature brief based on user input. Always communicate in the user's language (detect it from recent messages; default to English) and translate all section headings and content into that language instead of leaving anything in English.
 
 1. **Collect primary context.** Ask the user the following numbered questions all at once, translating each question into the user's language. Remind them to answer in a structured way (e.g., by numbering their replies):
    1. "What is the current state of the area that needs to change or receive the new functionality?"
-   2. "What exactly has to be changed or added? What should the final result look like?"
-   3. "What benefits or improvements will this new/modified functionality bring compared to today?"
+   2. "What exactly has to be changed or added, and what should the final result look like?"
+   3. "What benefits or improvements will this new/modified functionality bring compared to the current state?"
    4. "Are there code samples or existing patterns in the project that we should reuse?"
    5. "Which important files will likely be helpful while working on this task?"
-   6. "What else should we keep in mind? Any constraints, edge cases, or tips?"
+   6. "What else should we keep in mind — any constraints, edge cases, or practical tips?"
 
-2. **Derive a short description.** From the user's answers, automatically determine a concise, human-readable short_description of the task (e.g., "Add user authentication"). This will be used for the brief's main title.
+2. **Derive a short description.** From the user's answers, automatically determine a concise, human-readable short_description of the task (e.g., "Add user authentication", "Refactor payment module"). This will be used for the brief's main title.
 
 3. **Create the feature directory.**
-   - Ensure `.fastai/features/` exists (create it if necessary) before listing its contents.
-   - List the contents of `.fastai/features/`.
-   - Identify the highest numeric prefix (e.g., from `001_feature_name`).
-   - Increment this number for `next_feature_number` (start at `001` if no directories exist).
+   - Ensure the `.fastai/features/` directory exists (for example, run `mkdir -p .fastai/features`) before listing its contents.
+   - List the contents of the `.fastai/features/` directory.
+   - Identify the highest existing feature number (e.g., from `001_feature_name`).
+   - Increment this number by one to get the `next_feature_number`. If no features exist, start with `001`.
    - Convert the short_description into a slug (lowercase, replace spaces with underscores, remove special characters) to form `short_task_name`.
-   - Create `.fastai/features/{next_feature_number}_{short_task_name}`.
+   - Create a new directory: `.fastai/features/{next_feature_number}_{short_task_name}`.
 
-4. **Copy the template.**
+4. **Copy the brief template.**
    - Confirm `.fastai/templates/brief.md` exists and is readable. If it is missing, pause and ask the user for the correct template path before proceeding.
-   - Copy its content into `.fastai/features/{next_feature_number}_{short_task_name}/brief.md`.
+   - Use its content as the starting point for the new brief - copy it into `.fastai/features/{next_feature_number}_{short_task_name}/brief.md`.
 
 5. **Fill the brief intelligently.**
-   - Analyze the structure of the copied template and map each heading to the most relevant part of the user's answers.
+   - Before filling the brief, learn the project's conventions from every Markdown file inside the `.fastai/conventions/` directory and also study the codebase: find key files/modules using keywords from the user's answers, inspect relevant files, identify reusable patterns/examples, and determine which important files are likely to be involved.
    - Fill the title/summary with the derived short_description.
-   - Adapt gracefully if the template structure changes; place information where it fits best or add clearly labeled sections when necessary.
+   - Analyze the structure of the copied `brief.md` file and map each heading to the most relevant part of the user's answers and your findings.
+   - Use your understanding of the content to place information logically. If a specific placeholder is missing, place the relevant information in the most sensible alternative location or create a new, clearly labeled section.
 
-6. **Identify missing information.**
-   - Review the partially filled brief and determine what critical technical or product details are missing.
-   - Ask targeted follow-up questions (avoid generic "anything else?") to cover these gaps, phrasing them in the user's language.
-   - Integrate the answers into the most appropriate sections (or create new sections) and keep all specific values (IDs, URLs, amounts, etc.) accurate.
+6. **Proactively identify and ask for missing information.**
+   - Analyze the partially filled brief. Based on the content, identify any specific details, constraints, technical requirements, edge cases, or other information that is missing but would be crucial for a comprehensive implementation plan.
+   - Formulate specific, targeted follow-up questions to the user to gather these missing details, phrasing them in the user's language.
+   - Do not ask trivial questions if the answer can be obtained from existing sources (conventions, codebase); if the answer is obvious, fill it in and do not ask the user.
+   - Do not ask about file locations/patterns if they can be found via project search, or about code style rules and patterns if they are documented in conventions.
+   - Before asking questions, list the files/patterns you found so the user can confirm or correct them; then ask only about unresolved gaps, phrasing questions in the user's language.
+   - Intelligently integrate the user's responses to these follow-up questions into the most appropriate sections (or create new sections).
+   - Throughout this process, pay close attention to all specific values (identifiers, codes, amounts, URLs, etc.). Ensure these are accurately captured and included in the brief.
 
 7. **Finish.** Output the path to the created brief file and confirm it has been populated.
