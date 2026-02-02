@@ -131,8 +131,8 @@ Every Markdown file in `.fastai/conventions/` is injected as context before plan
 
 Add new `.md` files anytime you find something worth noting (“QA checklist”, “Release process”, “API integration tips”). Convert that knowledge into concise bullets under the relevant file so future runs inherit it automatically.
 
-> **Why briefs skip conventions**  
-> The brief command intentionally ignores `.fastai/conventions/`. Its job is to capture requirements quickly, so extra code-style or architecture context would only distract it. Conventions are pulled in when the plan is generated and when the plan is executed—exactly when those rules matter for writing code. This keeps the brief lightweight while still ensuring later stages follow every guideline.
+> **Why briefs read conventions and code**  
+> The brief command reads `.fastai/conventions/` and inspects relevant code paths so it can fill the brief intelligently without asking trivial questions that already have answers in your project rules or codebase. This keeps the interview focused on real requirements instead of rediscovering known constraints.
 
 > **How self-learning works**  
 > After `/fastai-execute-plan` finishes, it reviews the session for user corrections, mistakes, or emotional feedback. Each insight becomes a concise bullet appended to `.fastai/conventions/lessons.md`. Future runs automatically load that file, so the framework keeps improving without manual bookkeeping.
